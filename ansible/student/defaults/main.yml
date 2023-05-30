@@ -1,0 +1,4 @@
+---
+# defaults file for student
+add_user_sudo: True
+install_packages: True

@@ -1,0 +1,20 @@
+all:
+  vars:
+    ansible_user: ansible
+    ansible_ssh_private_key_file: ~/.ssh/id_aws_ansible
+  children:
+    bastion:
+      hosts:
+        ${bastion_instance.public_dns}:
+    student:
+      hosts:
+        %{~ for instance in private_instances ~}
+        ${ instance.private_ip }:
+        %{~ endfor ~}
+    lab:
+      hosts:
+        %{~ for instance in lab_instances ~}
+        ${ instance.private_ip }:
+        %{~ endfor ~}
+
+        

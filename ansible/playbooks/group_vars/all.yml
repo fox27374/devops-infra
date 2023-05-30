@@ -1,0 +1,3 @@
+#add_linux_user: False
+#add_user_sudo: False
+install_otel_collector: False

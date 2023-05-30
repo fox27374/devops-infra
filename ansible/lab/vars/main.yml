@@ -1,0 +1,13 @@
+---
+# vars file for lab
+linux_user: student
+docker_packages:
+  - "ca-certificates"
+  - "curl"
+  - "gnupg"
+  - "lsb-release"
+  - "docker.io"
+packages:
+  - "vim"
+  - "git"
+  - "net-tools"

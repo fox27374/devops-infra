@@ -1,0 +1,13 @@
+---
+- name: Update/Upgrade apt archives
+  ansible.builtin.apt:
+    update_cache: yes
+    upgrade: "yes"
+  become: yes
+
+- name: Install packages on bastion host
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ packages }}" 
+  become: yes

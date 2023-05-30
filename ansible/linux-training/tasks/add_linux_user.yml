@@ -1,0 +1,16 @@
+---
+- name: Add linux user
+  ansible.builtin.user:
+    name: "{{ linux_user }}"
+    password: "{{ linux_pw | password_hash('sha512') }}"
+    shell: /bin/bash
+    comment: Student
+    update_password: on_create
+  become: yes
+
+- name: Set authorized key for user
+  ansible.posix.authorized_key:
+    user: "{{ linux_user }}"
+    state: present
+    key: "{{ lookup('file', '../files/id_rsa.pub') }}"
+  become: yes

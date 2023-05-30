@@ -1,0 +1,6 @@
+---
+# tasks file for student
+- name: Install software
+  ansible.builtin.include_tasks: install_packages.yml
+  when:
+    - install_packages

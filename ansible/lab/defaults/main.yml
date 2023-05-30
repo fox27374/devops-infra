@@ -1,0 +1,5 @@
+---
+# defaults file for lab
+install_packages: True
+install_docker: True
+add_user_docker: True

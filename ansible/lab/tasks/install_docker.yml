@@ -1,0 +1,7 @@
+---
+- name: Install software packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ docker_packages }}" 
+  become: yes

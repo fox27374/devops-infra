@@ -1,0 +1,11 @@
+---
+# tasks file for bastion
+- name: Install software
+  ansible.builtin.include_tasks: install_packages.yml
+  when:
+    - install_packages
+
+- name: Copy nginx config file
+  ansible.builtin.include_tasks: copy_nginx_config.yml
+  when:
+    - copy_nginx_config

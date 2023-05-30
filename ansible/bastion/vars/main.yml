@@ -1,0 +1,5 @@
+---
+# vars file for bastion
+packages: ["vim", "nginx"]
+linux_user: student
+linux_pw: xS7E2fnCd5cfJhVs

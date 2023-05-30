@@ -1,0 +1,5 @@
+---
+collections:
+  # Install OTEL collector
+  - name: signalfx.splunk_otel_collector
+    source: https://galaxy.ansible.com

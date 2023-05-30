@@ -1,0 +1,11 @@
+---
+- name: Install Splunk OpenTelemetry Collector
+  ansible.builtin.include_role:
+    name: "signalfx.splunk_otel_collector.collector"
+  vars:
+    splunk_access_token: G5qTGVdMMr5gVIiRm-Tjpg
+    splunk_realm: eu0
+    splunk_otel_collector_config: /etc/otel/collector/agent_config.yaml
+    install_fluentd: no
+
+

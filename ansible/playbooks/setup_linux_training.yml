@@ -1,0 +1,22 @@
+- name: Setup linux training environment
+  hosts: all
+  become: yes
+  vars_files:
+    - ../vault.yml
+  roles:
+    - role: linux-training
+
+- name: Setup bastion
+  hosts: bastion
+  roles:
+    - role: bastion
+  
+- name: Setup student
+  hosts: private
+  roles:
+    - role: student
+
+- name: Setup lab
+  hosts: lab
+  roles:
+    - role: lab

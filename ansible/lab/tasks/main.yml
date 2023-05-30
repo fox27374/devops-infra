@@ -1,0 +1,16 @@
+---
+# tasks file for lab
+- name: Install packages
+  ansible.builtin.include_tasks: install_packages.yml
+  when:
+    - install_packages
+
+- name: Install docker
+  ansible.builtin.include_tasks: install_docker.yml
+  when:
+    - install_docker
+
+- name: Add user to docker group
+  ansible.builtin.include_tasks: add_user_docker.yml
+  when:
+    - add_user_docker
