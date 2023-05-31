@@ -36,9 +36,9 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           #role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
           #role-duration-seconds: 1200
-          #role-session-name: MySessionName
-      # Upload a file to AWS s3
-      - name:  Copy index.html to s3
+          role-session-name: dkofler_github_actions
+      # Create S3 bucket
+      - name:  reate S3 bucket
         run: |
           aws s3 mb s3://nts_dkofler_s3_github
   
