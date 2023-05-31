@@ -27,16 +27,20 @@ jobs:
     steps:
       - name: Git clone the repository
         uses: actions/checkout@v3
-      - name: configure aws credentials
+      - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::663136225943:role/NTS_User_Github_IDP
-          role-session-name: terraform
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          #role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
+          #role-duration-seconds: 1200
+          #role-session-name: MySessionName
       # Upload a file to AWS s3
       - name:  Copy index.html to s3
         run: |
-          aws s3 cp ./index.html s3://${{ env.BUCKET_NAME }}/
+          aws s3 mb s3://nts_dkofler_s3_github
   
 # jobs:
 #   terraform:
