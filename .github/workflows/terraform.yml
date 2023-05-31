@@ -38,7 +38,7 @@ jobs:
           #role-duration-seconds: 1200
           role-session-name: dkofler_github_actions
       # Create S3 bucket
-      - name:  reate S3 bucket
+      - name:  create S3 bucket
         run: |
           aws s3 mb s3://nts_dkofler_s3_github
   
