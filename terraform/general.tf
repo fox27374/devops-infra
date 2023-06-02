@@ -40,5 +40,5 @@ variable "EC2" {
 
 provider "aws" {
   region  = var.GEN["region"]
-  profile = "nts"
+  #profile = "nts"
 }
