@@ -15,7 +15,6 @@ on:
 # The workflow Creates static website using aws s3
 
 env:
-  BUCKET_NAME : "dkofler-test"
   AWS_REGION : "eu-west-1"
 # permission can be added at job level or workflow level    
 permissions:
@@ -30,39 +29,26 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          #aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          #aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-          #role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
-          #role-duration-seconds: 1200
           role-session-name: dkofler_github_actions
-      # Create S3 bucket
-      - name:  create S3 bucket
-        run: |
-          aws s3 mb s3://nts-dkofler-s3-github
-  
-# jobs:
-#   terraform:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v3
-#       - uses: hashicorp/setup-terraform@v2
+      - uses: hashicorp/setup-terraform@v2
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
 
-#       - name: Terraform fmt
-#         id: fmt
-#         run: terraform fmt -check
-#         continue-on-error: true
+      - name: Terraform Init
+        id: init
+        run: terraform init
 
-#       - name: Terraform Init
-#         id: init
-#         run: terraform init
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
 
-#       - name: Terraform Validate
-#         id: validate
-#         run: terraform validate -no-color
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+        continue-on-error: true
 
-#       - name: Terraform Plan
-#         id: plan
-#         run: terraform plan -no-color
-#         continue-on-error: true
+
