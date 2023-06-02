@@ -40,7 +40,7 @@ jobs:
       # Create S3 bucket
       - name:  create S3 bucket
         run: |
-          aws s3 mb s3://nts_dkofler_s3_github
+          aws s3 mb s3://nts_dkofler-s3-github
   
 # jobs:
 #   terraform:
