@@ -53,11 +53,11 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -no-color
+        run: terraform plan -out=tfplan -input=false -no-color
         continue-on-error: true
 
       - name: Terraform Apply
         id: apply
-        run: terraform plan -no-color
+        run: terraform apply -input=false -no-color tfplan
 
 
