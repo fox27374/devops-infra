@@ -38,7 +38,7 @@ variable "EC2" {
   type = map(any)
 }
 
-provider "aws" {
-  region  = var.GEN["region"]
+#provider "aws" {
+#  region  = var.GEN["region"]
   #profile = "nts"
-}
+#}
