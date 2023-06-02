@@ -21,8 +21,13 @@ permissions:
       id-token: write   # This is required for requesting the JWT
       contents: read    # This is required for actions/checkout
 jobs:
-  S3PackageUpload:
+  Deploy infrastructure:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        # We keep Terraform files in the terraform directory.
+        working-directory: ./terraform
     steps:
       - name: Git clone the repository
         uses: actions/checkout@v3
