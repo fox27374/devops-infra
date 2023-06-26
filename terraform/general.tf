@@ -6,14 +6,14 @@ terraform {
     }
   }
 
-  backend "s3" {
-    bucket         = "nts-dkofler-tf-state-github"
-    key            = "state/terraform.tfstate"
-    region         = "eu-west-1"
-    encrypt        = true
-    dynamodb_table = "devops-infra_tf_lockid"
-    profile        = "nts"
-  }
+  # backend "s3" {
+  #   bucket         = "nts-dkofler-tf-state-github"
+  #   key            = "state/terraform.tfstate"
+  #   region         = "eu-west-1"
+  #   encrypt        = true
+  #   dynamodb_table = "devops-infra_tf_lockid"
+  #   profile        = "nts"
+  # }
 
   required_version = ">= 1.2.0"
 }

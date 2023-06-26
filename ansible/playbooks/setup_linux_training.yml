@@ -12,7 +12,7 @@
     - role: bastion
   
 - name: Setup student
-  hosts: private
+  hosts: student
   roles:
     - role: student
 

@@ -23,10 +23,11 @@ SEC = {
 
 # EC2 variables
 EC2 = {
-  instance_type = "t2.micro"
-  bastion_ami   = "ami-096800910c1b781ba" # Ubuntu
-  student_ami   = "ami-096800910c1b781ba" # Splunk Enterprise
-  private_count = 1
+  bastion_ami   = "ami-01dd271720c1ba44f" # Ubuntu
+  bastion_instance_type = "t3.micro"
+  student_ami   = "ami-01dd271720c1ba44f"
+  student_instance_type = "t3.small"
+  private_count = 3
   lab_count     = 0
   student_name  = "student"
   bastion_name  = "bastion"

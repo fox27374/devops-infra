@@ -1,8 +1,7 @@
 # Create bastion instance
 resource "aws_instance" "bastion" {
-  #ami                    = var.EC2["ami"]
   ami                    = var.EC2["bastion_ami"]
-  instance_type          = var.EC2["instance_type"]
+  instance_type          = var.EC2["bastion_instance_type"]
   subnet_id              = aws_subnet.public.id
   user_data              = file("cloud-config/user_data.cloud")
   vpc_security_group_ids = [aws_security_group.public.id]
@@ -16,7 +15,7 @@ resource "aws_instance" "bastion" {
 resource "aws_instance" "private" {
   count                  = var.EC2["private_count"]
   ami                    = var.EC2["student_ami"]
-  instance_type          = var.EC2["instance_type"]
+  instance_type          = var.EC2["student_instance_type"]
   subnet_id              = aws_subnet.private.id
   user_data              = file("cloud-config/user_data.cloud")
   vpc_security_group_ids = [aws_security_group.private.id]

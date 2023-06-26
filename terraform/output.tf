@@ -32,8 +32,27 @@ resource "local_file" "ssh_config" {
 resource "local_file" "nginx_config" {
   content = templatefile("${path.module}/templates/nginx_config.tftpl",
     {
-      lab_instances = aws_instance.lab.*
+      lab_instances = aws_instance.private.*
     }
   )
   filename = "../ansible/bastion/files/linux-training.conf"
 }
+
+resource "local_file" "haproxy_map" {
+  content = templatefile("${path.module}/templates/haproxy_map.tftpl",
+    {
+      lab_instances = aws_instance.private.*
+    }
+  )
+  filename = "../ansible/bastion/files/haproxy.map"
+}
+
+resource "local_file" "haproxy_conf" {
+  content = templatefile("${path.module}/templates/haproxy_conf.tftpl",
+    {
+      lab_instances = aws_instance.private.*
+    }
+  )
+  filename = "../ansible/bastion/files/haproxy.conf"
+}
+
