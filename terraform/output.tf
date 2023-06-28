@@ -48,11 +48,20 @@ resource "local_file" "haproxy_map" {
 }
 
 resource "local_file" "haproxy_conf" {
-  content = templatefile("${path.module}/templates/haproxy_conf.tftpl",
+  content = templatefile("${path.module}/templates/haproxy_cfg.tftpl",
     {
       lab_instances = aws_instance.private.*
     }
   )
-  filename = "../ansible/bastion/files/haproxy.conf"
+  filename = "../ansible/bastion/files/haproxy.cfg"
+}
+
+resource "local_file" "ip_list" {
+  content = templatefile("${path.module}/templates/ip_list.tftpl",
+    {
+      lab_instances = aws_instance.private.*
+    }
+  )
+  filename = "../ansible/bastion/files/ip_list.csv"
 }
 

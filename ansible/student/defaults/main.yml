@@ -3,3 +3,4 @@
 add_user_sudo: True
 install_packages: True
 install_docker: True
+enable_pw_auth: True

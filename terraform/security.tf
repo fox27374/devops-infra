@@ -14,8 +14,8 @@ resource "aws_security_group" "public" {
 
   ingress {
     description      = "Custom HTTP"
-    from_port        = 8004
-    to_port          = 8062
+    from_port        = 8001
+    to_port          = 8063
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
@@ -24,7 +24,16 @@ resource "aws_security_group" "public" {
   ingress {
     description      = "Custom SSH"
     from_port        = 2001
-    to_port          = 2250
+    to_port          = 2063
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  ingress {
+    description      = "Custom HTTP Splunk"
+    from_port        = 9001
+    to_port          = 9063
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
@@ -60,6 +69,14 @@ resource "aws_security_group" "private" {
     description     = "HTTP from Bastion"
     from_port       = 80
     to_port         = 80
+    protocol        = "tcp"
+    security_groups = [aws_security_group.public.id]
+  }
+
+  ingress {
+    description     = "HTTP Splunk from Bastion"
+    from_port       = 8000
+    to_port         = 8000
     protocol        = "tcp"
     security_groups = [aws_security_group.public.id]
   }

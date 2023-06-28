@@ -9,3 +9,8 @@
   ansible.builtin.include_tasks: copy_nginx_config.yml
   when:
     - copy_nginx_config
+
+- name: Configure haproxy
+  ansible.builtin.include_tasks: configure_haproxy.yml
+  when:
+    - configure_haproxy

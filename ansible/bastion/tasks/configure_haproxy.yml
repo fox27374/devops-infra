@@ -1,0 +1,24 @@
+---
+- name: Copy haproxy config file
+  ansible.builtin.copy:
+    src: ../files/haproxy.cfg
+    dest: /etc/haproxy/haproxy.cfg
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes
+
+- name: Copy haproxy map file
+  ansible.builtin.copy:
+    src: ../files/haproxy.map
+    dest: /etc/haproxy/haproxy.map
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes
+
+- name: Restart haproxy service
+  ansible.builtin.service:
+    name: haproxy
+    state: restarted
+  become: yes

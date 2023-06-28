@@ -19,6 +19,9 @@ resource "aws_instance" "private" {
   subnet_id              = aws_subnet.private.id
   user_data              = file("cloud-config/user_data.cloud")
   vpc_security_group_ids = [aws_security_group.private.id]
+  root_block_device {
+    volume_size           = "20"
+  }
   tags = {
     Name = "${var.EC2["student_name"]}${format("%02d", count.index + 1)}",
     Type = "student"
