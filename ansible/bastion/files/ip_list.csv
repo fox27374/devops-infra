@@ -1,0 +1,2 @@
+Name,IP,Username,Password,SSH,HTTP,Splunk
+,10.42.22.27,student,supersecure,2027,8027,9027

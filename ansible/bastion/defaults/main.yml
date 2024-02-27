@@ -1,5 +1,5 @@
 ---
 # defaults file for bastion
-install_packages: True
+install_packages: False
 copy_nginx_config: True
 configure_haproxy: True

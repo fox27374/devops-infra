@@ -19,3 +19,8 @@
   ansible.builtin.include_tasks: enable_pw_auth.yml
   when:
     - enable_pw_auth
+
+- name: Copy lab files
+  ansible.builtin.include_tasks: copy_lab_files.yml
+  when:
+    - copy_lab_files

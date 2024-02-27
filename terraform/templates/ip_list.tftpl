@@ -1,5 +1,5 @@
 Name,IP,Username,Password,SSH,HTTP,Splunk
 %{ for instance in lab_instances ~}
-,${instance.private_ip},student,Imst4NTS,2${format("%03d", regex("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.(\\d{1,3})", instance.private_ip)[0])},8${format("%03d", regex("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.(\\d{1,3})", instance.private_ip)[0])},9${format("%03d", regex("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.(\\d{1,3})", instance.private_ip)[0])}
+,${instance.private_ip},student,supersecure,2${format("%03d", regex("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.(\\d{1,3})", instance.private_ip)[0])},8${format("%03d", regex("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.(\\d{1,3})", instance.private_ip)[0])},9${format("%03d", regex("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.(\\d{1,3})", instance.private_ip)[0])}
 
 %{~ endfor ~}

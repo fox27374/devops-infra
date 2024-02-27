@@ -1,0 +1,9 @@
+services:
+  web:
+    image: nginx:alpine
+#    ports:
+#      - XX:80
+#    volumes:
+#      - YYYY:ZZZZ
+#  db:
+#    image: redis:alpine

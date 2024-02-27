@@ -1,0 +1,9 @@
+---
+- name: Copy lab files
+  ansible.builtin.copy:
+    src: ../files/lab
+    dest: /home/student/
+    owner: student
+    group: student
+    mode: '0644'
+  become: yes
