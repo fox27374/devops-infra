@@ -15,8 +15,3 @@
   hosts: student
   roles:
     - role: student
-
-# - name: Setup lab
-#   hosts: lab
-#   roles:
-#     - role: lab

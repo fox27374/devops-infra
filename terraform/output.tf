@@ -59,6 +59,7 @@ resource "local_file" "haproxy_conf" {
 resource "local_file" "ip_list" {
   content = templatefile("${path.module}/templates/ip_list.tftpl",
     {
+      bastion_instance  = aws_instance.bastion
       lab_instances = aws_instance.private.*
     }
   )
