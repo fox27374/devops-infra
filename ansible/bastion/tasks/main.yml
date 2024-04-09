@@ -14,3 +14,13 @@
   ansible.builtin.include_tasks: configure_haproxy.yml
   when:
     - configure_haproxy
+
+- name: Enable password authentication
+  ansible.builtin.include_tasks: enable_pw_auth.yml
+  when:
+    - configure_sshd
+
+- name: Disable SSH timeout
+  ansible.builtin.include_tasks: disable_ssh_timeout.yml
+  when:
+    - configure_sshd

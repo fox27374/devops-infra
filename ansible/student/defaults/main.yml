@@ -4,4 +4,4 @@ add_user_sudo: False
 install_packages: False
 install_docker: False
 enable_pw_auth: False
-copy_lab_files: False
+copy_lab_files: True

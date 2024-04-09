@@ -1,5 +1,6 @@
 ---
 # defaults file for bastion
 install_packages: False
-copy_nginx_config: True
-configure_haproxy: True
+copy_nginx_config: False
+configure_haproxy: False
+configure_sshd: False

@@ -1,0 +1,21 @@
+---
+- name: Remove lab files
+  ansible.builtin.file:
+    path: /home/student/lab
+    state: absent
+  become: yes
+
+- name: Sync lab files
+  ansible.posix.synchronize:
+    src: ../files/lab
+    dest: /home/student
+  become: yes
+
+- name: Change folder permissions
+  ansible.builtin.file:
+    path: /home/student/lab
+    state: directory
+    recurse: yes
+    owner: student
+    group: student
+  become: yes

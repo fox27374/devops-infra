@@ -21,6 +21,6 @@
     - enable_pw_auth
 
 - name: Copy lab files
-  ansible.builtin.include_tasks: copy_lab_files.yml
+  ansible.builtin.include_tasks: rsync_lab_files.yml
   when:
     - copy_lab_files
