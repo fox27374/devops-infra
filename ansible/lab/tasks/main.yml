@@ -1,16 +1,31 @@
 ---
-# tasks file for lab
-- name: Install packages
+# tasks file for student
+- name: Install software
   ansible.builtin.include_tasks: install_packages.yml
   when:
     - install_packages
 
-- name: Install docker
-  ansible.builtin.include_tasks: install_docker.yml
+- name: Enable password authentication
+  ansible.builtin.include_tasks: enable_pw_auth.yml
   when:
-    - install_docker
+    - enable_pw_auth
 
-- name: Add user to docker group
-  ansible.builtin.include_tasks: add_user_docker.yml
+- name: Copy setup scripts
+  ansible.builtin.include_tasks: copy_setup_scripts.yml
   when:
-    - add_user_docker
+    - copy_setup_scripts
+
+- name: Install k3s
+  ansible.builtin.include_tasks: install_k3s.yml
+  when:
+    - install_k3s
+
+- name: Install Oh My Zsh
+  ansible.builtin.include_tasks: install_oh_my_zsh.yml
+  when:
+    - install_oh_my_zsh
+
+- name: Rsync lab file
+  ansible.builtin.include_tasks: rsync_lab_files.yml
+  when:
+    - rsync_lab_files

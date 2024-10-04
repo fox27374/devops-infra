@@ -23,11 +23,11 @@ SEC = {
 
 # EC2 variables
 EC2 = {
-  bastion_ami   = "ami-01dd271720c1ba44f" # Ubuntu
+  bastion_ami   = "ami-0a422d70f727fe93e" # Ubuntu 22.04
   bastion_instance_type = "t3.micro"
-  student_ami   = "ami-01dd271720c1ba44f"
+  student_ami   = "ami-0a422d70f727fe93e"
   student_instance_type = "t3.medium"
-  private_count = 30
+  private_count = 1
   lab_count     = 0
   student_name  = "student"
   bastion_name  = "bastion"

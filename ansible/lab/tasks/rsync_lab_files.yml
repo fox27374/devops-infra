@@ -1,0 +1,30 @@
+---
+- name: Remove lab files
+  ansible.builtin.file:
+    path: /opt/lab
+    state: absent
+  become: yes
+
+- name: Sync lab files
+  ansible.posix.synchronize:
+    src: ../files/lab
+    dest: /opt
+  become: yes
+
+- name: Change folder permissions
+  ansible.builtin.file:
+    path: /opt/lab
+    state: directory
+    recurse: yes
+    owner: root
+    group: root
+  become: yes
+
+- name: Render additional files
+  ansible.builtin.template:
+    src: ip-pool.j2
+    dest: /opt/lab/ip-pool.yaml
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes

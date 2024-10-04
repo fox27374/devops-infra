@@ -1,0 +1,36 @@
+---
+- name: Copy k3s setup script
+  ansible.builtin.copy:
+    src: ../files/install_k3s.sh
+    dest: /opt/setup/
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
+
+- name: Copy cilium setup script
+  ansible.builtin.copy:
+    src: ../files/install_cilium.sh
+    dest: /opt/setup/
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
+
+- name: Copy gatway api setup script
+  ansible.builtin.copy:
+    src: ../files/install_gateway_api.sh
+    dest: /opt/setup/
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
+
+- name: Copy helm setup script
+  ansible.builtin.copy:
+    src: ../files/install_helm.sh
+    dest: /opt/setup/
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes

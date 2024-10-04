@@ -1,5 +1,5 @@
 ---
-- name: Add user to docker group group
+- name: Add the user to docker group
   ansible.builtin.user:
     name: "{{ linux_user }}"
     groups: docker

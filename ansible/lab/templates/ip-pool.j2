@@ -1,0 +1,8 @@
+{% set ens5_ip =  hostvars[inventory_hostname]['ansible_ens5']['ipv4']['address'] -%}
+apiVersion: "cilium.io/v2alpha1"
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: "lb-pool"
+spec:
+  blocks:
+    - start: "{{ ens5_ip }}"

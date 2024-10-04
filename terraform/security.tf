@@ -40,18 +40,18 @@ resource "aws_security_group" "public" {
   }
 
   ingress {
-    description      = "Custom SSH"
-    from_port        = 2001
-    to_port          = 2063
+    description      = "Guacamole"
+    from_port        = 8080
+    to_port          = 8080
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
 
   ingress {
-    description      = "Custom HTTP Splunk"
-    from_port        = 9001
-    to_port          = 9063
+    description      = "Custom SSH"
+    from_port        = 2001
+    to_port          = 2063
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]

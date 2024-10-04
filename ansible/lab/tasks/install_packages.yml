@@ -2,8 +2,9 @@
 - name: Update/Upgrade apt archives
   ansible.builtin.apt:
     update_cache: yes
-    upgrade: "yes"
+    upgrade: no
   become: yes
+
   
 - name: Install packages on private hosts
   ansible.builtin.apt:
