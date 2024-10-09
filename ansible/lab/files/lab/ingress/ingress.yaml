@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kcd-ingress
+  namespace: kcd
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Path(`/`)
+      services:
+        - kind: Service
+          name: kcd-web
+          port: 80

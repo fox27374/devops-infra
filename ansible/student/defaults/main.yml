@@ -2,6 +2,6 @@
 # defaults file for student
 add_user_sudo: True
 install_packages: True
-install_docker: True
+install_docker: False
 enable_pw_auth: True
 copy_lab_files: True

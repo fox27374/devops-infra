@@ -1,20 +1,15 @@
 ---
 - name: Install k3s
   ansible.builtin.command:
-    cmd: /opt/setup/install_k3s.sh
+    cmd: bash /opt/setup/install_k3s.sh
   become: yes
 
-- name: Install Cilium
-  ansible.builtin.command:
-    cmd: /opt/setup/install_cilium.sh
-  become: yes
-
-- name: Install Gateway API
-  ansible.builtin.command:
-    cmd: /opt/setup/install_gateway_api.sh
-  become: yes
-
-# - name: Install Helm
+# - name: Install Cilium
 #   ansible.builtin.command:
-#     cmd: /opt/setup/install_helm.sh
+#     cmd: /opt/setup/install_cilium.sh
+#   become: yes
+
+# - name: Install Gateway API
+#   ansible.builtin.command:
+#     cmd: /opt/setup/install_gateway_api.sh
 #   become: yes

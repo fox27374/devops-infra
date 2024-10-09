@@ -1,29 +1,29 @@
 ---
-- name: Remove lab files
+- name: Remove setup files
   ansible.builtin.file:
-    path: /opt/lab
+    path: /opt/setup
     state: absent
   become: yes
 
-- name: Sync lab files
+- name: Sync setup files
   ansible.posix.synchronize:
-    src: ../files/lab
+    src: ../files/setup
     dest: /opt
   become: yes
 
 - name: Change folder permissions
   ansible.builtin.file:
-    path: /opt/lab
+    path: /opt/setup
     state: directory
     recurse: yes
     owner: root
     group: root
   become: yes
 
-# - name: Render ip-pool
+# - name: Render cilium values
 #   ansible.builtin.template:
-#     src: ip-pool.j2
-#     dest: /opt/lab/ingress/ip-pool.yaml
+#     src: cilium_values.j2
+#     dest: /opt/setup/cilium_values.yaml
 #     owner: root
 #     group: root
 #     mode: '0644'

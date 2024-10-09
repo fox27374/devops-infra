@@ -1,0 +1,88 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: index-sadcat
+  namespace: kcd
+data:
+  index.html: |
+    <!DOCTYPE html>
+      <html>
+        <head>
+        <style>
+          body {
+            background-color: white;
+          }
+        </style>
+      </head>
+      <body>
+        <img src="https://media.tenor.com/u4mpua8vD3IAAAAi/%C3%BCzg%C3%BCnkedikuzeyefe.gif">
+      </body>
+      </html>
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: index-goodjob
+  namespace: kcd
+data:
+  index.html: |
+    <!DOCTYPE html>
+      <html>
+        <head>
+        <style>
+          body {
+            background-color: white;
+          }
+        </style>
+      </head>
+      <body>
+        <img src="https://preview.redd.it/lrwkspvfkzo91.jpg?auto=webp&s=f45d83ec21fcd6aaa1fb8b8e6b26039d0d394129">
+      </body>
+      </html>
+---
+apiVersion: v1
+data:
+  kcd.conf: |
+    server {
+        listen       80;
+        listen  [::]:80;
+        server_name  localhost;
+
+        location / {
+            root   /usr/share/nginx/html/sadcat;
+            index  index.html index.htm;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+    }
+kind: ConfigMap
+metadata:
+  namespace: kcd
+  name: config-sadcat
+---
+apiVersion: v1
+data:
+  kcd.conf: |
+    server {
+        listen       80;
+        listen  [::]:80;
+        server_name  localhost;
+
+        location / {
+            root   /usr/share/nginx/html/goodjob;
+            index  index.html index.htm;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+    }
+kind: ConfigMap
+metadata:
+  namespace: kcd
+  name: config-goodjob

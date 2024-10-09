@@ -3,14 +3,15 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    run: nginx
-  name: nginx
+    app: kcd-web
+  name: kcd-web
+  namespace: kcd
 spec:
   ports:
-  - port: 80
+  - port: 8080
     protocol: TCP
     targetPort: 80
   selector:
-    run: nginx
+    app: web
 status:
   loadBalancer: {}

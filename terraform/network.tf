@@ -97,3 +97,12 @@ resource "aws_eip" "bastion" {
   }
 }
 
+# Create DNS entry
+# resource "aws_route53_record" "kcd" {
+#   zone_id = "Z04324152F8LEAJFJOZTE"
+#   name    = "kcd.aws.ntslab.eu"
+#   type    = "A"
+#   ttl     = 300
+#   records = [aws_eip.bastion.public_ip]
+# }
+

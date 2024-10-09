@@ -1,0 +1,17 @@
+{% set ens5_ip =  hostvars[inventory_hostname]['ansible_ens5']['ipv4']['address'] -%}
+kubeProxyReplacement: true
+l2announcements:
+  enabled: true
+externalIPs:
+  enabled: true
+operator:
+  replicas: 1
+  rollOutPods: true
+rollOutCiliumPods: true
+ingressController:
+  enabled: true
+  default: true
+  loadbalancerMode: shared
+  service:
+    annotations:
+      io.cilium/lb-ipam-ips: {{ ens5_ip }}

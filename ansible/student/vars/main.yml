@@ -8,3 +8,4 @@ packages:
   - "ca-certificates"
   - "curl"
   - "gnupg"
+  - "zsh"

@@ -1,5 +1,5 @@
 ---
 # defaults file for linux-training
-add_linux_user: True
-add_user_sudo: True
+add_linux_user: False
+add_user_sudo: False
 install_otel_collector: False

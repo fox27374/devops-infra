@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: kcd-web
+  name: kcd-web
+  namespace: kcd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kcd-web
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: kcd-web
+    spec:
+      securityContext:
+        runAsNonRoot: false
+      containers:
+      - image: nginxinc/nginx-unprivileged
+        name: nginx
+        securityContext:
+          allowPrivilegeEscalation: true
+          capabilities:
+            drop:
+            - "ALL"
+          seccompProfile:
+            type: "RuntimeDefault"
+        volumeMounts:
+        - name: sadcat
+          mountPath: /usr/share/nginx/html/sadcat
+        - name: goodjob
+          mountPath: /usr/share/nginx/html/goodjob
+        - name: config-nginx
+          mountPath: /etc/nginx/conf.d
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      volumes:
+      - name: sadcat
+        configMap:
+          name: index-sadcat
+      - name: goodjob
+        configMap:
+          name: index-goodjob
+      - name: config-nginx
+        configMap:
+          name: config-sadcat
+status: {}
