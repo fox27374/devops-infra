@@ -29,3 +29,8 @@
   ansible.builtin.include_tasks: rsync_lab_files.yml
   when:
     - rsync_lab_files
+
+- name: Setup Lab
+  ansible.builtin.include_tasks: setup_lab.yml
+  when:
+    - setup_lab
