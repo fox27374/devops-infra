@@ -46,5 +46,5 @@ spec:
           name: index-goodjob
       - name: config-nginx
         configMap:
-          name: config-sadcat
+          name: config-goodjob
 status: {}
