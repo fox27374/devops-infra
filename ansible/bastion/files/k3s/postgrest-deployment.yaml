@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: postgrest
+  name: postgrest
+  namespace: guacamole
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgrest
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: postgrest
+    spec:
+      containers:
+      - image: postgrest/postgrest:latest
+        name: postgrest
+        envFrom:
+          - secretRef:
+              name: postgrest
+        env:
+        - name: PGRST_OPENAPI_SERVER_PROXY_URI
+          value: http://127.0.0.1:3000
+        resources: {}
+status: {}

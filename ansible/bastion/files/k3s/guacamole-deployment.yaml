@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guacamole
+  namespace: guacamole
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: guacamole
+  template:
+    metadata:
+      labels:
+        app: guacamole
+    spec:
+      enableServiceLinks: false
+      containers:
+      - name: guacamole
+        image: guacamole/guacamole:latest
+        envFrom:
+        - secretRef:
+            name: guacamole
+

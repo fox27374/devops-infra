@@ -1,0 +1,20 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: guacamole
+  namespace: guacamole
+spec:
+  parentRefs:
+  - name: guacamole
+    namespace: guacamole
+  hostnames:
+  - "guacamole.lnxnet.org"
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: guacamole 
+      port: 80

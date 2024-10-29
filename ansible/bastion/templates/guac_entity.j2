@@ -1,0 +1,22 @@
+[
+  {
+    "entity_id": 300,
+    "name": "k8s",
+    "type": "USER_GROUP"
+  },
+  {
+    "entity_id": 400,
+    "name": "docker",
+    "type": "USER_GROUP"
+  },
+{% for ip in lab_ips %}
+{% set id = ip | regex_search('(\d+)$') %}
+{% set id_formated = '%03d' | format(id | int) %}
+  {
+    "entity_id": {{ id }},
+    "name": "lab{{ id_formated }}",
+    "type": "USER"
+  }{% if not loop.last %},{% endif %}
+  
+{% endfor %}
+]

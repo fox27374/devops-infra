@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: guacamole-ingress
+  namespace: guacamole
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Path(`/`)
+      services:
+        - kind: Service
+          name: guacamole
+          port: 80

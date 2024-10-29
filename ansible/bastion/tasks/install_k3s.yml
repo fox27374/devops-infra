@@ -1,0 +1,6 @@
+---
+- name: Install k3s
+  ansible.builtin.command:
+    cmd: bash /opt/setup/k3s/install_k3s.sh
+  become: yes
+

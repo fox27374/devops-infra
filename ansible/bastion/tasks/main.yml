@@ -10,11 +10,6 @@
   when:
     - copy_nginx_config
 
-- name: Configure haproxy
-  ansible.builtin.include_tasks: configure_haproxy.yml
-  when:
-    - configure_haproxy
-
 - name: Enable password authentication
   ansible.builtin.include_tasks: enable_pw_auth.yml
   when:
@@ -24,3 +19,18 @@
   ansible.builtin.include_tasks: disable_ssh_timeout.yml
   when:
     - configure_sshd
+
+- name: Create Guacamole configs
+  ansible.builtin.include_tasks: create_guac_configs.yml
+  when:
+    - create_guac_configs
+
+- name: Rsync setup files
+  ansible.builtin.include_tasks: rsync_setup_files.yml
+  when:
+    - rsync_setup_files
+
+- name: Install k3s
+  ansible.builtin.include_tasks: install_k3s.yml
+  when:
+    - install_k3s

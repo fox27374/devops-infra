@@ -1,0 +1,23 @@
+[
+{% for ip in lab_ips %}
+{% set id = ip | regex_search('(\d+)$') %}
+{% set id_formated = '%03d' | format(id | int) %}
+  {
+    "connection_id": {{ id }},
+    "parameter_name": "username",
+    "parameter_value": "student"
+  },
+  {
+    "connection_id": {{ id }},
+    "parameter_name": "private-key",
+    "parameter_value": "PRIVATE-KEY"
+  },
+  {
+    "connection_id": {{ id }},
+    "parameter_name": "hostname",
+    "parameter_value": "{{ ip }}"
+  }
+  {% if not loop.last %},{% endif %}
+  
+{% endfor %}
+]

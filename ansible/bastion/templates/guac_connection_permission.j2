@@ -1,0 +1,11 @@
+[
+{% for ip in lab_ips %}
+{% set id = ip | regex_search('(\d+)$') %}
+  {
+    "entity_id": {{ id }},
+    "connection_id": {{ id }},
+    "permission": "READ"
+  }{% if not loop.last %},{% endif %}
+  
+{% endfor %}
+]

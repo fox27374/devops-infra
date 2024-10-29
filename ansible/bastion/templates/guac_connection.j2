@@ -1,0 +1,13 @@
+[
+{% for ip in lab_ips %}
+{% set id = ip | regex_search('(\d+)$') %}
+{% set id_formated = '%03d' | format(id | int) %}
+  {
+    "connection_id": {{ id }},
+    "connection_name": "lab{{ id_formated }}",
+    "parent_id": 300,
+    "protocol": "ssh"
+  }{% if not loop.last %},{% endif %}
+  
+{% endfor %}
+]

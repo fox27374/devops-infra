@@ -2,5 +2,7 @@
 # defaults file for bastion
 install_packages: False
 copy_nginx_config: False
-configure_haproxy: False
 configure_sshd: False
+create_guac_configs: True
+rsync_setup_files: False
+install_k3s: False

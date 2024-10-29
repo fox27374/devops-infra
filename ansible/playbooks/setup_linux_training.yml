@@ -8,6 +8,8 @@
 
 - name: Setup bastion
   hosts: bastion
+  vars_files:
+    - ../vault.yml
   roles:
     - role: bastion
   

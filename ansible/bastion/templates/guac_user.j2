@@ -1,0 +1,16 @@
+[
+{% for ip in lab_ips %}
+{% set id = ip | regex_search('(\d+)$') %}
+{% set id_formated = '%03d' | format(id | int) %}
+  {
+    "user_id": {{ id }},
+    "entity_id": {{ id }},
+    "password_hash": "\\x{{ guac_hashes.password }}",
+    "password_salt": "\\x{{ guac_hashes.salt }}",
+    "password_date": "2024-10-18T12:41:17.19+00:00",
+    "disabled": false,
+    "expired": false
+  }{% if not loop.last %},{% endif %}
+  
+{% endfor %}
+]

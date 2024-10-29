@@ -1,0 +1,22 @@
+---
+- name: Remove setup files
+  ansible.builtin.file:
+    path: /opt/setup/k3s
+    state: absent
+  become: yes
+
+- name: Sync setup files
+  ansible.posix.synchronize:
+    src: ../files/k3s
+    dest: /opt/setup
+  become: yes
+
+- name: Change folder permissions
+  ansible.builtin.file:
+    path: /opt/setup/k3s
+    state: directory
+    recurse: yes
+    owner: root
+    group: root
+  become: yes
+
