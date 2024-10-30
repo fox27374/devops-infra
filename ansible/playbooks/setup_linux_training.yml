@@ -4,7 +4,7 @@
   vars_files:
     - ../vault.yml
   roles:
-    - role: linux-training
+    - role: base
 
 - name: Setup bastion
   hosts: bastion
@@ -13,12 +13,12 @@
   roles:
     - role: bastion
   
-- name: Setup student
+- name: Setup docker lab
   hosts: student
   roles:
-    - role: student
+    - role: docker
 
-- name: Setup lab
+- name: Setup k8s lab
   hosts: lab
   roles:
-    - role: lab
+    - role: k8s
