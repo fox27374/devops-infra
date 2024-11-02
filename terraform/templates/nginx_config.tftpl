@@ -1,8 +1,15 @@
 server {
   listen         8001;
   proxy_http_version 1.1;
-    %{ for instance in lab_instances ~}
-    location /lab${format("%03d", regex("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.(\\d{1,3})", instance.private_ip)[0])}/ {
+    %{ for instance in docker_instances ~}
+    location /docker${format("%03d", regex("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.(\\d{1,3})", instance.private_ip)[0])}/ {
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_pass http://${instance.private_ip}:80/;
+    }
+    %{ endfor ~}
+    %{ for instance in k8s_instances ~}
+    location /k8s${format("%03d", regex("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.(\\d{1,3})", instance.private_ip)[0])}/ {
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP $remote_addr;
       proxy_pass http://${instance.private_ip}:80/;

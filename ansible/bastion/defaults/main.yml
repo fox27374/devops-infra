@@ -4,5 +4,6 @@ install_packages: False
 copy_nginx_config: False
 configure_sshd: False
 create_guac_configs: True
+configure_guacamole: True
 rsync_setup_files: False
 install_k3s: False

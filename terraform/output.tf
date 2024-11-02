@@ -5,15 +5,15 @@ output "bastion-dns-name" {
 
 resource "local_file" "ansible_inventory" {
   depends_on = [
-    aws_instance.private,
-    aws_instance.lab,
+    aws_instance.docker,
+    aws_instance.k8s,
     aws_eip.bastion
   ]
   content = templatefile("${path.module}/templates/inventory.tftpl",
     {
       bastion_instance  = aws_instance.bastion
-      private_instances = aws_instance.private.*
-      lab_instances     = aws_instance.lab.*
+      docker_instances = aws_instance.docker.*
+      k8s_instances     = aws_instance.k8s.*
     }
   )
   filename = "../ansible/inventory.yml"
@@ -23,7 +23,8 @@ resource "local_file" "ansible_inventory" {
 resource "local_file" "nginx_config" {
   content = templatefile("${path.module}/templates/nginx_config.tftpl",
     {
-      lab_instances = aws_instance.private.*
+      docker_instances = aws_instance.docker.*
+      k8s_instances = aws_instance.k8s.*
     }
   )
   filename = "../ansible/bastion/files/linux-training.conf"
@@ -33,7 +34,8 @@ resource "local_file" "ip_list" {
   content = templatefile("${path.module}/templates/ip_list.tftpl",
     {
       bastion_instance  = aws_instance.bastion
-      lab_instances = aws_instance.private.*
+      docker_instances = aws_instance.docker.*
+      k8s_instances = aws_instance.k8s.*
     }
   )
   filename = "../ansible/bastion/files/ip_list.csv"

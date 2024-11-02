@@ -84,14 +84,6 @@ resource "aws_security_group" "private" {
     cidr_blocks = [var.NW["sn_private_cidr"]]
   }
 
-  ingress {
-    description = "SQL from private"
-    from_port   = 3306
-    to_port     = 3306
-    protocol    = "tcp"
-    cidr_blocks = [var.NW["sn_private_cidr"]]
-  }
-
   egress {
     from_port        = 0
     to_port          = 0

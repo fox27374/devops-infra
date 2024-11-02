@@ -1,4 +1,4 @@
-- name: Setup linux training environment
+- name: Setup lab environment
   hosts: all
   become: yes
   vars_files:

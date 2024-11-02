@@ -6,13 +6,13 @@ all:
     bastion:
       hosts:
         ${bastion_instance.public_dns}:
-    student:
+    docker:
       hosts:
-        %{~ for instance in private_instances ~}
+        %{~ for instance in docker_instances ~}
         ${ instance.private_ip }:
         %{~ endfor ~}
-    lab:
+    k8s:
       hosts:
-        %{~ for instance in lab_instances ~}
+        %{~ for instance in k8s_instances ~}
         ${ instance.private_ip }:
         %{~ endfor ~}

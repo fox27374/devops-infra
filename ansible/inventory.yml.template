@@ -5,9 +5,9 @@ all:
   children:
     bastion:
       hosts:
-    student:
+    docker:
       hosts:
-    lab:
+    k8s:
       hosts:
 
         

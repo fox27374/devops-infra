@@ -1,0 +1,14 @@
+---
+- name: Copy guacamole install script
+  ansible.builtin.copy:
+    src: ../files/config_guacamole.sh
+    dest: /opt/setup/guacamole/config_guacamole.sh
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes
+
+- name: Execute guacamole install script
+  ansible.builtin.command:
+    cmd: bash /opt/setup/guacamole/config_guacamole.sh
+  become: yes

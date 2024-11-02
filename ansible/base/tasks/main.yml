@@ -11,6 +11,11 @@
   when:
     - add_user_sudo
 
+- name: Install Oh My Zsh
+  ansible.builtin.include_tasks: install_oh_my_zsh.yml
+  when:
+    - install_oh_my_zsh
+
 - name: Install OTEL collector
   ansible.builtin.include_tasks: install_otel_collector.yml
   when:
