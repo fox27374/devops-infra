@@ -2,3 +2,4 @@ vault.yml
 vault.pass
 venv/
 inventory.yml
+ip_list.csv

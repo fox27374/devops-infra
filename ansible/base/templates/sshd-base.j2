@@ -1,0 +1,17 @@
+PermitRootLogin no
+ChallengeResponseAuthentication no
+{% set ssh_users_tmp = [] %}
+{% for user in ssh_users %}
+{% set ssh_users_tmp = ssh_users_tmp.append(user) %}
+{% endfor %}
+AllowUsers {{ ssh_users_tmp | join(" ") }}
+UsePAM yes
+X11Forwarding yes
+PrintMotd no
+AcceptEnv LANG LC_*
+Subsystem sftp	/usr/lib/openssh/sftp-server
+{% if password_auth is defined %}
+PasswordAuthentication yes
+{% else %}
+PasswordAuthentication no
+{% endif %}

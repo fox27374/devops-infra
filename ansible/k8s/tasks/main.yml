@@ -5,11 +5,6 @@
   when:
     - install_packages
 
-- name: Enable password authentication
-  ansible.builtin.include_tasks: enable_pw_auth.yml
-  when:
-    - enable_pw_auth
-
 - name: Rsync setup files
   ansible.builtin.include_tasks: rsync_setup_files.yml
   when:
@@ -19,11 +14,6 @@
   ansible.builtin.include_tasks: install_k3s.yml
   when:
     - install_k3s
-
-- name: Install Oh My Zsh
-  ansible.builtin.include_tasks: install_oh_my_zsh.yml
-  when:
-    - install_oh_my_zsh
 
 - name: Rsync lab files
   ansible.builtin.include_tasks: rsync_lab_files.yml

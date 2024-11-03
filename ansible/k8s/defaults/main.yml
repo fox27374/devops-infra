@@ -1,11 +1,8 @@
 ---
-# defaults file for student
-add_user_sudo: False
+# defaults file for k8s
 install_packages: False
-enable_pw_auth: False
 copy_setup_scripts: False
 install_k3s: False
-install_oh_my_zsh: False
 rsync_setup_files: False
 rsync_lab_files: False
 setup_lab: False

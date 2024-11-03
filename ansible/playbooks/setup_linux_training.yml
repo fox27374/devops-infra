@@ -6,19 +6,19 @@
   roles:
     - role: base
 
-- name: Setup bastion
-  hosts: bastion
-  vars_files:
-    - ../vault.yml
-  roles:
-    - role: bastion
+# - name: Setup bastion
+#   hosts: bastion
+#   vars_files:
+#     - ../vault.yml
+#   roles:
+#     - role: bastion
   
-- name: Setup docker lab
-  hosts: student
-  roles:
-    - role: docker
+# - name: Setup docker lab
+#   hosts: student
+#   roles:
+#     - role: docker
 
-- name: Setup k8s lab
-  hosts: lab
-  roles:
-    - role: k8s
+# - name: Setup k8s lab
+#   hosts: lab
+#   roles:
+#     - role: k8s

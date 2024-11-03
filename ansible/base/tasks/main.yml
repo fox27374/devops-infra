@@ -11,6 +11,17 @@
   when:
     - add_user_sudo
 
+- name: Setup SSH
+  import_tasks: setup_ssh.yml
+  tags: ssh
+  when:
+    - setup_ssh
+
+- name: Install software packages
+  ansible.builtin.include_tasks: install_packages.yml
+  when:
+    - install_packages
+
 - name: Install Oh My Zsh
   ansible.builtin.include_tasks: install_oh_my_zsh.yml
   when:

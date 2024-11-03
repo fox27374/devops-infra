@@ -8,8 +8,8 @@ resource "aws_security_group" "public" {
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
-    #cidr_blocks      = ["0.0.0.0/0"] 
-    cidr_blocks      = ["89.105.180.0/24"]
+    cidr_blocks      = ["0.0.0.0/0"] 
+    #cidr_blocks      = ["89.105.180.0/24"]
     ipv6_cidr_blocks = ["::/0"]
   }
 

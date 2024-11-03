@@ -10,16 +10,6 @@
   when:
     - copy_nginx_config
 
-- name: Enable password authentication
-  ansible.builtin.include_tasks: enable_pw_auth.yml
-  when:
-    - configure_sshd
-
-- name: Disable SSH timeout
-  ansible.builtin.include_tasks: disable_ssh_timeout.yml
-  when:
-    - configure_sshd
-
 - name: Create Guacamole configs
   ansible.builtin.include_tasks: create_guac_configs.yml
   when:

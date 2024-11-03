@@ -38,5 +38,5 @@ resource "local_file" "ip_list" {
       k8s_instances = aws_instance.k8s.*
     }
   )
-  filename = "../ansible/bastion/files/ip_list.csv"
+  filename = "../ansible/ip_list.csv"
 }

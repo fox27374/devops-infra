@@ -1,3 +1,15 @@
 ---
-# vars file for linux-training
-linux_user: student
+# vars file for base
+packages:
+  - "vim"
+  - "git"
+  - "net-tools"
+  - "ca-certificates"
+  - "curl"
+  - "gnupg"
+  - "zsh"
+
+ssh_users:
+  - ansible
+  - student
+  - dkofler

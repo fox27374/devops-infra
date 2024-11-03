@@ -1,0 +1,12 @@
+---
+- name: Generate sshd basic config
+  become: yes
+  ansible.builtin.template:
+    src: sshd-base.j2
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - Restart SSH Service
+...

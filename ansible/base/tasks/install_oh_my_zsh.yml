@@ -1,9 +1,15 @@
 ---
 - name: Set ZSH as default shell
   ansible.builtin.user:
-    name: student
+    name: "{{ linux_user }}"
     shell: /bin/zsh
   become: yes
+
+- name: Create setup directory
+  ansible.builtin.file:
+    path: /opt/setup
+    state: directory
+    mode: '0755'
 
 - name: Download Oh My Zsh install script
   ansible.builtin.get_url:
@@ -28,8 +34,8 @@
 - name: Copy .zshrc
   ansible.builtin.copy:
     src: ../files/.zshrc
-    dest: /home/student/
-    owner: student
-    group: student
+    dest: "/home/{{ linux_user }}/"
+    owner: "{{ linux_user }}"
+    group: "{{ linux_user }}"
     mode: '0644'
   become: yes
