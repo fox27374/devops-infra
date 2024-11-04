@@ -1,0 +1,4 @@
+---
+- name: Restart Nginx Service
+  import_tasks: restart_nginx.yml
+...

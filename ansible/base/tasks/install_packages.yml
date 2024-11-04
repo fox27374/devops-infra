@@ -6,7 +6,7 @@
     cache_valid_time: 86400
   become: yes
 
-- name: Install packages on bastion host
+- name: Install software packages
   ansible.builtin.apt:
     name: "{{ item }}"
     state: present

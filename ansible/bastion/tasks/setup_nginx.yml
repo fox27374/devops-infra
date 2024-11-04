@@ -1,0 +1,30 @@
+---
+- name: Initialize an empty list for docker host IP addresses
+  set_fact:
+    docker_ips: []
+
+- name: Initialize an empty list for k8s host IP addresses
+  set_fact:
+    k8s_ips: []
+
+- name: Add each host's IP to the list
+  set_fact:
+    docker_ips: "{{ docker_ips + [hostvars[item]['ansible_host'] | default(item)] }}"
+  loop: "{{ groups['docker'] }}"
+
+- name: Add each host's IP to the list
+  set_fact:
+    k8s_ips: "{{ k8s_ips + [hostvars[item]['ansible_host'] | default(item)] }}"
+  loop: "{{ groups['k8s'] }}"
+
+- name: Render nginx config
+  become: yes
+  ansible.builtin.template:
+    src: nginx_config.j2
+    dest: /etc/nginx/conf.d/training.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - Restart nginx Service
+

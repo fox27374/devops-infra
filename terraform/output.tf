@@ -19,17 +19,6 @@ resource "local_file" "ansible_inventory" {
   filename = "../ansible/inventory.yml"
 }
 
-
-resource "local_file" "nginx_config" {
-  content = templatefile("${path.module}/templates/nginx_config.tftpl",
-    {
-      docker_instances = aws_instance.docker.*
-      k8s_instances = aws_instance.k8s.*
-    }
-  )
-  filename = "../ansible/bastion/files/linux-training.conf"
-}
-
 resource "local_file" "ip_list" {
   content = templatefile("${path.module}/templates/ip_list.tftpl",
     {

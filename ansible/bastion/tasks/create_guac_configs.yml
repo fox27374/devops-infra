@@ -12,14 +12,23 @@
     mode: '0755'
   become: yes
 
-- name: Initialize an empty list for IP addresses
+- name: Initialize an empty list for docker host IP addresses
   set_fact:
-    lab_ips: []
+    docker_ips: []
+
+- name: Initialize an empty list for k8s host IP addresses
+  set_fact:
+    k8s_ips: []
 
 - name: Add each host's IP to the list
   set_fact:
-    lab_ips: "{{ lab_ips + [hostvars[item]['ansible_host'] | default(item)] }}"
-  loop: "{{ groups['lab'] }}"
+    lab_ips: "{{ docker_ips + [hostvars[item]['ansible_host'] | default(item)] }}"
+  loop: "{{ groups['docker'] }}"
+
+- name: Add each host's IP to the list
+  set_fact:
+    lab_ips: "{{ k8s_ips + [hostvars[item]['ansible_host'] | default(item)] }}"
+  loop: "{{ groups['k8s'] }}"
 
 - name: Create salt and password hash
   ansible.builtin.command:

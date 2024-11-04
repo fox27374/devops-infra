@@ -5,10 +5,10 @@
   when:
     - install_packages
 
-- name: Copy nginx config file
-  ansible.builtin.include_tasks: copy_nginx_config.yml
+- name: Setup nginx
+  ansible.builtin.include_tasks: setup_nginx.yml
   when:
-    - copy_nginx_config
+    - setup_nginx
 
 - name: Create Guacamole configs
   ansible.builtin.include_tasks: create_guac_configs.yml
