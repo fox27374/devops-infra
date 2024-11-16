@@ -13,6 +13,8 @@ NW = {
   sn_private_name = "private"
   sn_public_cidr  = "10.42.22.64/26"
   sn_public_name  = "public"
+  dns_fqdn        = "lab.aws.ntslab.eu"
+  dns_zone_id     = "Z04324152F8LEAJFJOZTE"
 }
 
 # Security variables
@@ -23,15 +25,15 @@ SEC = {
 
 # EC2 variables
 EC2 = {
-  bastion_ami   = "ami-0a422d70f727fe93e" # Ubuntu 22.04
+  bastion_ami           = "ami-0a422d70f727fe93e" # Ubuntu 22.04
   bastion_instance_type = "t3.medium"
-  docker_ami   = "ami-0a422d70f727fe93e"
-  docker_instance_type = "t3.medium"
-  docker_name  = "docker"
-  k8s_ami   = "ami-0a422d70f727fe93e"
-  k8s_instance_type = "t3.medium"
-  docker_count = 1
-  k8s_count     = 1
-  k8s_name  = "k8s"
-  bastion_name  = "bastion"
+  docker_ami            = "ami-0a422d70f727fe93e"
+  docker_instance_type  = "t3.medium"
+  docker_name           = "docker"
+  k8s_ami               = "ami-0a422d70f727fe93e"
+  k8s_instance_type     = "t3.medium"
+  docker_count          = 1
+  k8s_count             = 1
+  k8s_name              = "k8s"
+  bastion_name          = "bastion"
 }
