@@ -11,15 +11,17 @@ resource "aws_vpc" "devops-infra" {
 
 # Create Subnets
 resource "aws_subnet" "private" {
-  vpc_id     = aws_vpc.devops-infra.id
-  cidr_block = var.NW["sn_private_cidr"]
+  vpc_id            = aws_vpc.devops-infra.id
+  cidr_block        = var.NW["sn_private_cidr"]
+  availability_zone = var.NW["az2"]
   tags = {
     Name = var.NW["sn_private_name"]
   }
 }
 resource "aws_subnet" "public" {
-  vpc_id     = aws_vpc.devops-infra.id
-  cidr_block = var.NW["sn_public_cidr"]
+  vpc_id            = aws_vpc.devops-infra.id
+  cidr_block        = var.NW["sn_public_cidr"]
+  availability_zone = var.NW["az1"]
   tags = {
     Name = var.NW["sn_public_name"]
   }

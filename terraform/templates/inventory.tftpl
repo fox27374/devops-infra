@@ -5,7 +5,7 @@ all:
   children:
     bastion:
       hosts:
-        ${bastion_instance.public_dns}:
+        ${bastion_dns.name}:
     docker:
       hosts:
         %{~ for instance in docker_instances ~}
