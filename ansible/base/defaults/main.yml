@@ -3,6 +3,6 @@
 add_linux_user: False
 add_user_sudo: False
 setup_ssh: False
-install_packages: False
+install_packages: True
 install_oh_my_zsh: False
 install_otel_collector: False

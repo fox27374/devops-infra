@@ -20,7 +20,7 @@ resource "aws_instance" "docker" {
   user_data              = file("cloud-config/user_data.cloud")
   vpc_security_group_ids = [aws_security_group.private.id]
   root_block_device {
-    volume_size           = "20"
+    volume_size = "20"
   }
   tags = {
     Name = "${var.EC2["docker_name"]}${format("%02d", count.index + 1)}",
@@ -30,8 +30,8 @@ resource "aws_instance" "docker" {
 
 # Create k8s lab instances
 resource "aws_instance" "k8s" {
-  count = var.EC2["k8s_count"]
-  ami   = var.EC2["k8s_ami"]
+  count                  = var.EC2["k8s_count"]
+  ami                    = var.EC2["k8s_ami"]
   instance_type          = var.EC2["k8s_instance_type"]
   subnet_id              = aws_subnet.private.id
   user_data              = file("cloud-config/user_data.cloud")

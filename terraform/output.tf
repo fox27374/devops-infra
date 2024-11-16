@@ -11,9 +11,9 @@ resource "local_file" "ansible_inventory" {
   ]
   content = templatefile("${path.module}/templates/inventory.tftpl",
     {
-      bastion_instance  = aws_instance.bastion
+      bastion_instance = aws_instance.bastion
       docker_instances = aws_instance.docker.*
-      k8s_instances     = aws_instance.k8s.*
+      k8s_instances    = aws_instance.k8s.*
     }
   )
   filename = "../ansible/inventory.yml"
@@ -22,9 +22,9 @@ resource "local_file" "ansible_inventory" {
 resource "local_file" "ip_list" {
   content = templatefile("${path.module}/templates/ip_list.tftpl",
     {
-      bastion_instance  = aws_instance.bastion
+      bastion_instance = aws_instance.bastion
       docker_instances = aws_instance.docker.*
-      k8s_instances = aws_instance.k8s.*
+      k8s_instances    = aws_instance.k8s.*
     }
   )
   filename = "../ansible/ip_list.csv"
