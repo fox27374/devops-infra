@@ -3,5 +3,5 @@
   ansible.builtin.apt:
     name: "{{ item }}"
     state: present
-  loop: "{{ packages }}" 
+  loop: "{{ additional_packages }}" 
   become: yes

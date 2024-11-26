@@ -10,22 +10,27 @@
   when:
     - setup_nginx
 
+- name: Setup environment
+  ansible.builtin.include_tasks: setup_environment.yml
+  when:
+    - setup_environment
+
+- name: Setup k3s
+  ansible.builtin.include_tasks: setup_k3s.yml
+  when:
+    - setup_k3s
+
 - name: Create Guacamole configs
   ansible.builtin.include_tasks: create_guac_configs.yml
   when:
     - create_guac_configs
 
+- name: Setup Guacamole
+  ansible.builtin.include_tasks: setup_guacamole.yml
+  when:
+    - setup_guacamole
+
 - name: Configure Guacamole
   ansible.builtin.include_tasks: configure_guacamole.yml
   when:
     - configure_guacamole
-
-- name: Rsync setup files
-  ansible.builtin.include_tasks: rsync_setup_files.yml
-  when:
-    - rsync_setup_files
-
-- name: Install k3s
-  ansible.builtin.include_tasks: install_k3s.yml
-  when:
-    - install_k3s

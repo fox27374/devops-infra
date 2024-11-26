@@ -11,7 +11,7 @@ resource "local_file" "ansible_inventory" {
   ]
   content = templatefile("${path.module}/templates/inventory.tftpl",
     {
-      bastion_dns = aws_route53_record.bastion
+      bastion_dns      = aws_route53_record.bastion
       docker_instances = aws_instance.docker.*
       k8s_instances    = aws_instance.k8s.*
     }

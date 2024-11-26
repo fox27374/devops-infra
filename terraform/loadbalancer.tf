@@ -21,12 +21,11 @@ resource "aws_lb_listener" "devops-infra" {
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.bastion.arn
+    target_group_arn = aws_lb_target_group.guacamole.arn
   }
 }
 
-
-resource "aws_lb_target_group" "bastion" {
+resource "aws_lb_target_group" "guacamole" {
   health_check {
     interval            = 10
     path                = "/"
@@ -35,34 +34,75 @@ resource "aws_lb_target_group" "bastion" {
     healthy_threshold   = 5
     unhealthy_threshold = 2
   }
-  name        = "bastion"
+  name        = "guacamole"
   port        = 80
   protocol    = "HTTP"
   target_type = "instance"
   vpc_id      = aws_vpc.devops-infra.id
 }
 
-resource "aws_lb_target_group_attachment" "bastion" {
-  target_group_arn = aws_lb_target_group.bastion.arn
+resource "aws_lb_target_group" "nginx" {
+  health_check {
+    interval            = 10
+    path                = "/"
+    protocol            = "HTTP"
+    timeout             = 5
+    healthy_threshold   = 5
+    unhealthy_threshold = 2
+  }
+  name        = "nginx"
+  port        = 8080
+  protocol    = "HTTP"
+  target_type = "instance"
+  vpc_id      = aws_vpc.devops-infra.id
+}
+
+resource "aws_lb_target_group_attachment" "guacamole" {
+  target_group_arn = aws_lb_target_group.guacamole.arn
   target_id        = aws_instance.bastion.id
   port             = 80
 }
 
-resource "aws_lb_listener_rule" "listener_rule" {
+resource "aws_lb_target_group_attachment" "nginx" {
+  target_group_arn = aws_lb_target_group.nginx.arn
+  target_id        = aws_instance.bastion.id
+  port             = 8080
+}
+
+resource "aws_lb_listener_rule" "guacamole_rule" {
   listener_arn = aws_lb_listener.devops-infra.arn
 
   condition {
-    path_pattern {
-      values = ["/*"]
+    host_header {
+      values = [var.NW["guacamole_dns_fqdn"]]
     }
   }
 
   action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.bastion.arn
+    target_group_arn = aws_lb_target_group.guacamole.arn
   }
 
   tags = {
     Name = "bastion"
+  }
+}
+
+resource "aws_lb_listener_rule" "nginx_rule" {
+  listener_arn = aws_lb_listener.devops-infra.arn
+
+  condition {
+    host_header {
+      values = [var.NW["lb_dns_fqdn"]]
+    }
+  }
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.nginx.arn
+  }
+
+  tags = {
+    Name = "nginx"
   }
 }

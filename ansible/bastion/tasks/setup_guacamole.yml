@@ -1,0 +1,5 @@
+---
+- name: Setup Guacamole
+  ansible.builtin.command:
+    cmd: bash /opt/setup/setup_guacamole.sh
+  become: yes

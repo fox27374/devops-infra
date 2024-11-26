@@ -1,3 +1,4 @@
 ---
 # vars file for bastion
-packages: ["nginx"]
+additional_packages:
+  - "nginx"

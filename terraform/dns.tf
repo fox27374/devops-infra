@@ -7,12 +7,24 @@ resource "aws_route53_record" "lab" {
   records = [aws_lb.devops-infra.dns_name]
 }
 
+resource "aws_route53_record" "guacamole" {
+  zone_id = var.NW["dns_zone_id"]
+  name    = var.NW["guacamole_dns_fqdn"]
+  type    = "CNAME"
+  ttl     = 28800
+  records = [aws_lb.devops-infra.dns_name]
+}
+
 resource "aws_route53_record" "bastion" {
   zone_id = var.NW["dns_zone_id"]
   name    = var.NW["bastion_dns_fqdn"]
   type    = "A"
   ttl     = 28800
   records = [aws_instance.bastion.public_ip]
+
+  depends_on = [
+    aws_instance.bastion
+  ]
 }
 
 resource "aws_route53_record" "lab_validation_record" {
@@ -34,7 +46,7 @@ resource "aws_route53_record" "lab_validation_record" {
 
 resource "aws_acm_certificate" "lab" {
   domain_name               = var.NW["lb_dns_fqdn"]
-  subject_alternative_names = [var.NW["lb_dns_fqdn"]]
+  subject_alternative_names = [var.NW["lb_dns_fqdn"], var.NW["bastion_dns_fqdn"], var.NW["guacamole_dns_fqdn"]]
   validation_method         = "DNS"
 
   lifecycle {

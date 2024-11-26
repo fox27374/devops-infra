@@ -45,10 +45,6 @@
     guac_hashes: "{{ guac_hashes | default({}) | combine({ item.split('=')[0]: item.split('=')[1] }) }}"
   with_items: "{{ hash_script_output.stdout_lines }}"
 
-- name: Display Guacamole hashes
-  debug:
-    var: guac_hashes
-
 - name: Render entity json
   become: yes
   ansible.builtin.template:

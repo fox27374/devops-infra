@@ -1,8 +1,8 @@
 ---
 # defaults file for linux-training
-add_linux_user: False
-add_user_sudo: False
-setup_ssh: False
+add_linux_user: True
+add_user_sudo: True
+setup_ssh: True
 install_packages: True
-install_oh_my_zsh: False
+install_oh_my_zsh: True
 install_otel_collector: False

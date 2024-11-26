@@ -3,19 +3,19 @@ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 YAMLDIR=/opt/setup/k3s
 
 cd $YAMLDIR/ns
-kubectl create -f .
+kubectl apply -f .
 
 cd $YAMLDIR/secret
-kubectl create -f .
+kubectl apply -f .
 
 cd $YAMLDIR/configmap
-kubectl create -f .
+kubectl apply -f .
 
 cd $YAMLDIR/service
-kubectl create -f .
+kubectl apply -f .
 
 cd $YAMLDIR/ingress
-kubectl create -f .
+kubectl apply -f .
 
 cd $YAMLDIR/deployment
-kubectl create -f .
+kubectl apply -f .
