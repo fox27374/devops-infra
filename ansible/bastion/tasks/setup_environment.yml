@@ -18,6 +18,17 @@
     dest: /opt/setup
   become: yes
 
+- name: Render ingress config
+  become: yes
+  ansible.builtin.template:
+    src: ingress.j2
+    dest: /opt/setup/k3s/ingress/ingress.yaml
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - Restart nginx Service
+
 - name: Copy k3s install script
   ansible.builtin.copy:
     src: ../files/setup_k3s.sh

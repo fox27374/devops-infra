@@ -49,7 +49,7 @@ resource "aws_nat_gateway" "devops-infra" {
 resource "aws_route_table" "devops-infra-public" {
   vpc_id = aws_vpc.devops-infra.id
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block = var.NW["external_v4_cidr"]
     gateway_id = aws_internet_gateway.devops-infra.id
   }
   tags = {
@@ -61,7 +61,7 @@ resource "aws_route_table" "devops-infra-public" {
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.devops-infra.id
   route {
-    cidr_block     = "0.0.0.0/0"
+    cidr_block     = var.NW["external_v4_cidr"]
     nat_gateway_id = aws_nat_gateway.devops-infra.id
     #gateway_id = aws_internet_gateway.devops-infra.id
   }
