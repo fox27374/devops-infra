@@ -2,8 +2,8 @@
 # defaults file for bastion
 install_packages: False
 setup_nginx: False
-create_guac_configs: False
-configure_guacamole: False
+create_guac_configs: True
+configure_guacamole: True
 rsync_setup_files: False
 setup_environment: False
 setup_k3s: False

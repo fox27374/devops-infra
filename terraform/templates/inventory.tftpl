@@ -5,7 +5,7 @@ all:
   children:
     bastion:
       vars:
-        guacamole_fqdn: ${guacamole_dns.name}
+        guacamole_dns: ${guacamole_dns.name}
       hosts:
         ${bastion_dns.name}:
     docker:
