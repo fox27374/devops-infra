@@ -1,8 +1,0 @@
----
-# defaults file for k8s
-install_packages: True
-copy_setup_scripts: True
-install_k3s: True
-rsync_setup_files: False
-rsync_lab_files: False
-setup_lab: False

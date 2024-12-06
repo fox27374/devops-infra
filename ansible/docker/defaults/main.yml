@@ -1,5 +1,0 @@
----
-# defaults file for docker
-install_packages: True
-install_docker: False
-copy_lab_files: True

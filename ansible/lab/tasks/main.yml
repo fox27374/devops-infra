@@ -1,0 +1,40 @@
+---
+# General
+- name: Rsync setup files
+  ansible.builtin.include_tasks: rsync_setup_files.yml
+  when:
+    - rsync_setup_files
+
+# Docker
+- name: Install docker
+  ansible.builtin.include_tasks: install_docker.yml
+  when:
+    - lab_type == "docker"
+    - install_docker
+
+- name: Rsync docker lab files
+  ansible.builtin.include_tasks: rsync_docker_lab.yml
+  when:
+    - lab_type == "docker"
+    - rsync_docker_lab
+
+# k8s
+- name: Install k3s
+  ansible.builtin.include_tasks: install_k3s.yml
+  when:
+    - lab_type == "k8s"
+    - install_k3s
+
+- name: Rsync k8s lab files
+  ansible.builtin.include_tasks: rsync_k8s_lab.yml
+  when:
+    - lab_type == "k8s"
+    - rsync_k8s_lab
+
+- name: Setup k8s lab
+  ansible.builtin.include_tasks: setup_k8s_lab.yml
+  when:
+    - lab_type == "k8s"
+    - setup_k8s_lab
+
+

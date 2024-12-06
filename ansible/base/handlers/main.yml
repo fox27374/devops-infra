@@ -1,7 +1,4 @@
 ---
 - name: Restart SSH Service
   import_tasks: restart_ssh.yml
-
-- name: Restart Nginx Service
-  import_tasks: restart_nginx.yml
 ...

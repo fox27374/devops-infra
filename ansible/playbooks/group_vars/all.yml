@@ -1,1 +1,14 @@
 linux_user: student
+packages:
+  - "vim"
+  - "git"
+  - "net-tools"
+  - "ca-certificates"
+  - "curl"
+  - "gnupg"
+  - "zsh"
+  - "jq"
+ssh_users:
+  - ansible
+  - student
+password_auth: True

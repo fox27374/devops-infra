@@ -33,13 +33,9 @@ SEC = {
 EC2 = {
   bastion_ami           = "ami-0a422d70f727fe93e" # Ubuntu 22.04
   bastion_instance_type = "t3.medium"
-  docker_ami            = "ami-0a422d70f727fe93e"
-  docker_instance_type  = "t3.medium"
-  docker_name           = "docker"
-  k8s_ami               = "ami-0a422d70f727fe93e"
-  k8s_instance_type     = "t3.medium"
-  docker_count          = 1
-  k8s_count             = 1
-  k8s_name              = "k8s"
+  lab_ami            = "ami-0a422d70f727fe93e"
+  lab_instance_type  = "t3.medium"
+  lab_name           = "lab"
+  lab_count          = 1
   bastion_name          = "bastion"
 }

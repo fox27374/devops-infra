@@ -1,21 +1,21 @@
 ---
 - name: Remove lab files
   ansible.builtin.file:
-    path: /home/student/lab
+    path: "/home/{{ linux_user }}/k8s_lab"
     state: absent
   become: yes
 
 - name: Sync lab files
   ansible.posix.synchronize:
-    src: ../files/lab
-    dest: /home/student
+    src: ../files/k8s_lab
+    dest: "/home/{{ linux_user }}"
   become: yes
 
 - name: Change folder permissions
   ansible.builtin.file:
-    path: /home/student/lab
+    path: "/home/{{ linux_user }}/k8s_lab"
     state: directory
     recurse: yes
-    owner: student
-    group: student
+    owner: "{{ linux_user }}"
+    group: "{{ linux_user }}"
   become: yes

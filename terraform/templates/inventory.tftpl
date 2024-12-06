@@ -8,13 +8,8 @@ all:
         guacamole_dns: ${guacamole_dns.name}
       hosts:
         ${bastion_dns.name}:
-    docker:
+    lab:
       hosts:
-        %{~ for instance in docker_instances ~}
-        ${ instance.private_ip }:
-        %{~ endfor ~}
-    k8s:
-      hosts:
-        %{~ for instance in k8s_instances ~}
+        %{~ for instance in lab_instances ~}
         ${ instance.private_ip }:
         %{~ endfor ~}

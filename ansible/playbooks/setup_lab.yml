@@ -1,0 +1,6 @@
+- name: Setup lab
+  hosts: lab
+  vars_files:
+    - ../vault.yml
+  roles:
+    - role: lab

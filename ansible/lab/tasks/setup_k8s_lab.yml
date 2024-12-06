@@ -1,6 +1,6 @@
 ---
 - name: Install k3s
   ansible.builtin.command:
-    cmd: bash /opt/lab/reset_lab.sh
+    cmd: "bash /home/{{ linux_user }}/k8s_lab/reset_lab.sh"
   become: yes
 

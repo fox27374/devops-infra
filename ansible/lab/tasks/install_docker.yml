@@ -4,14 +4,15 @@
     path: /etc/apt/keyrings/docker.gpg
     state: absent
   become: yes
-
-- name: Copy docker install script
-  ansible.builtin.copy:
-    src: ../files/docker_install.sh
-    dest: /tmp/docker_install.sh
-    mode: '0755'
   
 - name: Execute install script
   ansible.builtin.command:
-    cmd: /tmp/docker_install.sh
+    cmd: /opt/setup/install_docker.sh
+  become: yes
+
+- name: Add the user to docker group
+  ansible.builtin.user:
+    name: "{{ linux_user }}"
+    groups: docker
+    append: yes
   become: yes

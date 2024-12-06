@@ -25,6 +25,11 @@
     owner: root
     group: root
     mode: '0644'
+
+- name: Delete default site
+  become: yes
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
   notify:
     - Restart nginx Service
-

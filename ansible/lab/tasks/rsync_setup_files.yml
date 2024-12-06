@@ -20,6 +20,19 @@
     group: root
   become: yes
 
+- name: Get all script files
+  ansible.builtin.find:
+    paths: /opt/setup
+    patterns: "*.sh"
+  register: script_files
+
+- name: Change script file permissions
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    mode: '0755'
+  loop: "{{ script_files.files }}"
+  become: yes
+
 # - name: Render cilium values
 #   ansible.builtin.template:
 #     src: cilium_values.j2
