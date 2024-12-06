@@ -1,6 +1,5 @@
 - name: Setup lab environment
   hosts: all
-  become: yes
   vars_files:
     - ../vault.yml
   roles:
