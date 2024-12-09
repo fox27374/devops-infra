@@ -1,0 +1,43 @@
+---
+- name: Remove setup files
+  ansible.builtin.file:
+    path: /opt/setup
+    state: absent
+  become: yes
+
+- name: Sync setup files
+  ansible.posix.synchronize:
+    src: ../files/setup
+    dest: /opt
+  become: yes
+
+- name: Change folder permissions
+  ansible.builtin.file:
+    path: /opt/setup
+    state: directory
+    recurse: yes
+    owner: root
+    group: root
+  become: yes
+
+- name: Get all script files
+  ansible.builtin.find:
+    paths: /opt/setup
+    patterns: "*.sh"
+  register: script_files
+
+- name: Change script file permissions
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    mode: '0755'
+  loop: "{{ script_files.files }}"
+  become: yes
+
+# - name: Render cilium values
+#   ansible.builtin.template:
+#     src: cilium_values.j2
+#     dest: /opt/setup/cilium_values.yaml
+#     owner: root
+#     group: root
+#     mode: '0644'
+#   become: yes

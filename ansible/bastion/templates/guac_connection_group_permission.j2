@@ -4,11 +4,6 @@
     "connection_group_id": 300,
     "permission": "READ"
   },
-  {
-    "entity_id": 400,
-    "connection_group_id": 400,
-    "permission": "READ"
-  },
 {% for ip in lab_ips %}
 {% set id = ip | regex_search('(\d+)$') %}
   {

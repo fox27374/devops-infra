@@ -10,6 +10,7 @@
     path: /opt/setup
     state: directory
     mode: '0755'
+  become: yes
 
 - name: Download Oh My Zsh install script
   ansible.builtin.get_url:

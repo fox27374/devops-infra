@@ -1,4 +1,10 @@
 ---
+- name: Copy k3s yaml files
+  ansible.posix.synchronize:
+    src: ../files/k3s
+    dest: /opt/setup
+  become: yes
+
 - name: Setup k3s
   ansible.builtin.command:
     cmd: bash /opt/setup/setup_k3s.sh

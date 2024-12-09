@@ -2,20 +2,10 @@ server {
   listen         8080;
   proxy_http_version 1.1;
 
-{% for ip in docker_ips %}
+{% for ip in lab_ips %}
 {% set id = ip | regex_search('(\d+)$') %}
 {% set id_formated = '%03d' | format(id | int) %}
-  location /docker{{ id_formated }}/ {
-      proxy_set_header Host $host;
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_pass http://{{ ip }}:80/;
-    }
-  
-{% endfor %}
-{% for ip in k8s_ips %}
-{% set id = ip | regex_search('(\d+)$') %}
-{% set id_formated = '%03d' | format(id | int) %}
-  location /k8s{{ id_formated }}/ {
+  location /lab{{ id_formated }}/ {
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP $remote_addr;
       proxy_pass http://{{ ip }}:80/;
