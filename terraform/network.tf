@@ -83,7 +83,6 @@ resource "aws_route_table_association" "public" {
 
 # Create elastic IPs
 resource "aws_eip" "nat-gateway" {
-  vpc        = true
   depends_on = [aws_internet_gateway.devops-infra]
   tags = {
     Name = var.NW["vpc_name"]
@@ -91,7 +90,6 @@ resource "aws_eip" "nat-gateway" {
 }
 
 resource "aws_eip" "bastion" {
-  vpc        = true
   depends_on = [aws_instance.bastion]
   instance   = aws_instance.bastion.id
   tags = {

@@ -24,8 +24,8 @@ resource "aws_instance" "lab" {
     volume_size = "20"
   }
   tags = {
-    Name    = "${var.EC2["lab_name"]}${format("%02d", count.index + 1)}",
-    Type    = "lab"
+    Name = "${var.EC2["lab_name"]}${format("%02d", count.index + 1)}",
+    Type = "lab"
   }
 }
 

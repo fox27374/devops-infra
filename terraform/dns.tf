@@ -22,7 +22,7 @@ resource "aws_route53_record" "bastion" {
   ttl     = 28800
   records = [aws_eip.bastion.public_ip]
 
-  depends_on = [ aws_eip.bastion ]
+  depends_on = [aws_eip.bastion]
 }
 
 resource "aws_route53_record" "lab_validation_record" {

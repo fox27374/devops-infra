@@ -23,7 +23,7 @@ resource "aws_vpc_security_group_ingress_rule" "ssh_from_external" {
   cidr_ipv4   = var.NW["external_v4_cidr"]
   ip_protocol = "tcp"
   to_port     = 22
-  from_port = 0
+  from_port   = 0
   tags = {
     Name = "ssh"
   }
@@ -36,7 +36,7 @@ resource "aws_vpc_security_group_ingress_rule" "https_from_external" {
   cidr_ipv4   = var.NW["external_v4_cidr"]
   ip_protocol = "tcp"
   to_port     = 443
-  from_port = 0
+  from_port   = 0
   tags = {
     Name = "https"
   }
@@ -49,7 +49,7 @@ resource "aws_vpc_security_group_ingress_rule" "custom_http_from_public" {
   cidr_ipv4   = var.NW["sn_public_cidr"]
   ip_protocol = "tcp"
   to_port     = 8080
-  from_port = 0
+  from_port   = 0
   tags = {
     Name = "custom_http"
   }
@@ -72,7 +72,7 @@ resource "aws_vpc_security_group_ingress_rule" "ssh_from_public" {
   description = "SSH from public"
   ip_protocol = "tcp"
   to_port     = 22
-  from_port = 0
+  from_port   = 0
   cidr_ipv4   = var.NW["sn_public_cidr"]
   tags = {
     Name = "ssh"
@@ -85,7 +85,7 @@ resource "aws_vpc_security_group_ingress_rule" "ssh_from_private" {
   description = "SSH from private"
   ip_protocol = "tcp"
   to_port     = 22
-  from_port = 0
+  from_port   = 0
   cidr_ipv4   = var.NW["sn_private_cidr"]
   tags = {
     Name = "ssh"
@@ -98,7 +98,7 @@ resource "aws_vpc_security_group_ingress_rule" "http_from_public" {
   description = "HTTP from public"
   ip_protocol = "tcp"
   to_port     = 80
-  from_port = 0
+  from_port   = 0
   cidr_ipv4   = var.NW["sn_public_cidr"]
   tags = {
     Name = "http"
