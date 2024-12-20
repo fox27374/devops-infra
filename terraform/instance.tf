@@ -7,8 +7,7 @@ resource "aws_instance" "bastion" {
   vpc_security_group_ids = [aws_security_group.public.id]
   tags = {
     Name    = var.EC2["bastion_name"],
-    Type    = "bastion",
-    SubType = "bastion"
+    Type    = "bastion"
   }
 }
 
@@ -25,6 +24,7 @@ resource "aws_instance" "lab" {
   }
   tags = {
     Name = "${var.EC2["lab_name"]}${format("%02d", count.index + 1)}",
+    ID = "${format("%02d", count.index + 1)}"
     Type = "lab"
   }
 }
