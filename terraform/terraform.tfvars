@@ -17,10 +17,10 @@ NW = {
   external_v6_cidr   = "::/0"
   az1                = "eu-west-1a"
   az2                = "eu-west-1b"
-  lb_dns_fqdn        = "lab.aws.ntslab.eu"
+  dns_zone_id        = "Z04324152F8LEAJFJOZTE"
+  domain_name        = "aws.ntslab.eu"
   guacamole_dns_fqdn = "guacamole.aws.ntslab.eu"
   bastion_dns_fqdn   = "bastion.aws.ntslab.eu"
-  dns_zone_id        = "Z04324152F8LEAJFJOZTE"
 }
 
 # Security variables
