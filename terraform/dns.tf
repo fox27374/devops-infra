@@ -1,21 +1,26 @@
-# Create DNS entry for bastion host
-resource "aws_route53_record" "lab" {
-  zone_id = var.NW["dns_zone_id"]
-  name    = var.NW["lb_dns_fqdn"]
-  type    = "CNAME"
-  ttl     = 28800
-  records = [aws_lb.devops-infra.dns_name]
+# Create list of DNS entries used for record and certificate creation
+locals {
+  lab_dns_names = [
+    for instance in aws_instance.lab[*]: "${instance.tags["Name"]}.${var.NW["domain_name"]}"
+  ]
+
+  # Additional static or custom DNS names
+  additional_dns_names = [
+    var.NW["guacamole_dns_fqdn"],
+    var.NW["bastion_dns_fqdn"]
+  ]
+
+  dns_names = concat(local.lab_dns_names, local.additional_dns_names)
 }
 
-resource "aws_route53_record" "guacamole" {
-  zone_id = var.NW["dns_zone_id"]
-  name    = var.NW["guacamole_dns_fqdn"]
-  type    = "CNAME"
-  ttl     = 28800
-  records = [aws_lb.devops-infra.dns_name]
-}
+# # Create DNS zone
+# resource "aws_route53_zone" "devops" {
+#   name = "devops.ntslab.eu"
+# }
 
+# Create bastion DNS record
 resource "aws_route53_record" "bastion" {
+  #zone_id = aws_route53_zone.devops.zone_id
   zone_id = var.NW["dns_zone_id"]
   name    = var.NW["bastion_dns_fqdn"]
   type    = "A"
@@ -25,6 +30,28 @@ resource "aws_route53_record" "bastion" {
   depends_on = [aws_eip.bastion]
 }
 
+# Create guacamole DNS records (CNAME) pointing to the ALB
+resource "aws_route53_record" "guacamole" {
+  #zone_id = aws_route53_zone.devops.zone_id
+  zone_id = var.NW["dns_zone_id"]
+  name    = var.NW["guacamole_dns_fqdn"]
+  type    = "CNAME"
+  ttl     = 28800
+  records = [aws_lb.devops-infra.dns_name]
+}
+
+# Create all other DNS records (CNAME) pointing to the ALB
+resource "aws_route53_record" "lab" {
+  count   = length(local.lab_dns_names)
+  #zone_id = aws_route53_zone.devops.zone_id
+  zone_id = var.NW["dns_zone_id"]
+  name    = local.lab_dns_names[count.index]
+  type    = "CNAME"
+  ttl     = 28800
+  records = [aws_lb.devops-infra.dns_name]
+}
+
+# Create certificate validation DNS record
 resource "aws_route53_record" "lab_validation_record" {
   for_each = {
     for dvo in aws_acm_certificate.lab.domain_validation_options : dvo.domain_name => {
@@ -39,12 +66,16 @@ resource "aws_route53_record" "lab_validation_record" {
   records         = [each.value.record]
   ttl             = 60
   type            = each.value.type
-  zone_id         = var.NW["dns_zone_id"]
+  #zone_id         = aws_route53_zone.devops.zone_id
+  zone_id = var.NW["dns_zone_id"]
+
+  depends_on = [aws_route53_record.lab]
 }
 
+# Create a certificate with SAN entries for the DNS names
 resource "aws_acm_certificate" "lab" {
-  domain_name               = var.NW["lb_dns_fqdn"]
-  subject_alternative_names = [var.NW["lb_dns_fqdn"], var.NW["bastion_dns_fqdn"], var.NW["guacamole_dns_fqdn"]]
+  domain_name               = var.NW["guacamole_dns_fqdn"]
+  subject_alternative_names = local.dns_names
   validation_method         = "DNS"
 
   lifecycle {
@@ -52,9 +83,10 @@ resource "aws_acm_certificate" "lab" {
   }
 }
 
+# Create a certificate validation
 resource "aws_acm_certificate_validation" "lab_validation" {
   certificate_arn         = aws_acm_certificate.lab.arn
   validation_record_fqdns = [for record in aws_route53_record.lab_validation_record : record.fqdn]
+
+  depends_on = [aws_route53_record.lab_validation_record]
 }
-
-
