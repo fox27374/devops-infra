@@ -9,7 +9,7 @@
   loop: "{{ groups['lab'] }}"
 
 - name: Render nginx config
-  become: yes
+  become: true
   ansible.builtin.template:
     src: nginx_config.j2
     dest: /etc/nginx/conf.d/training.conf
@@ -18,7 +18,7 @@
     mode: '0644'
 
 - name: Delete default site
-  become: yes
+  become: true
   ansible.builtin.file:
     path: /etc/nginx/sites-enabled/default
     state: absent

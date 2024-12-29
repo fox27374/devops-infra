@@ -2,14 +2,14 @@
 - name: Install k3s
   ansible.builtin.command:
     cmd: bash /opt/setup/install_k3s.sh
-  become: yes
+  become: true
 
 # - name: Install Cilium
 #   ansible.builtin.command:
 #     cmd: /opt/setup/install_cilium.sh
-#   become: yes
+#   become: true
 
 # - name: Install Gateway API
 #   ansible.builtin.command:
 #     cmd: /opt/setup/install_gateway_api.sh
-#   become: yes
+#   become: true

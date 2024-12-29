@@ -4,11 +4,11 @@
     update_cache: yes
     upgrade: "yes"
     cache_valid_time: 86400
-  become: yes
+  become: true
 
 - name: Install software packages
   ansible.builtin.apt:
     name: "{{ item }}"
     state: present
   loop: "{{ packages }}" 
-  become: yes
+  become: true

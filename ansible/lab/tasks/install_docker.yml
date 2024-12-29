@@ -3,16 +3,16 @@
   ansible.builtin.file:
     path: /etc/apt/keyrings/docker.gpg
     state: absent
-  become: yes
+  become: true
   
 - name: Execute install script
   ansible.builtin.command:
     cmd: /opt/setup/install_docker.sh
-  become: yes
+  become: true
 
 - name: Add the user to docker group
   ansible.builtin.user:
     name: "{{ linux_user }}"
     groups: docker
     append: yes
-  become: yes
+  become: true

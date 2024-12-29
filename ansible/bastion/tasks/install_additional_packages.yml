@@ -4,4 +4,4 @@
     name: "{{ item }}"
     state: present
   loop: "{{ additional_packages }}" 
-  become: yes
+  become: true

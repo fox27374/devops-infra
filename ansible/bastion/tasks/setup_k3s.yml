@@ -3,12 +3,12 @@
   ansible.posix.synchronize:
     src: ../files/k3s
     dest: /opt/setup
-  become: yes
+  become: true
 
 - name: Setup k3s
   ansible.builtin.command:
     cmd: bash /opt/setup/setup_k3s.sh
-  become: yes
+  become: true
 
 - name: Wait for k3s to be ready
   ansible.builtin.wait_for:

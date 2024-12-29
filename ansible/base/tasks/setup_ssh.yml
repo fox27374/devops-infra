@@ -1,6 +1,6 @@
 ---
 - name: Generate sshd basic config
-  become: yes
+  become: true
   ansible.builtin.template:
     src: sshd-base.j2
     dest: /etc/ssh/sshd_config

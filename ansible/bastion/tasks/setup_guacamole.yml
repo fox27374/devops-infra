@@ -2,20 +2,19 @@
 - name: Setup Guacamole
   ansible.builtin.command:
     cmd: bash /opt/setup/setup_guacamole.sh
-  become: yes
   
 - name: Remove guacamole config files
   ansible.builtin.file:
     path: /opt/setup/guacamole
     state: absent
-  become: yes
+  become: true
 
 - name: Create directory for guacamole config files
   ansible.builtin.file:
     path: /opt/setup/guacamole
     state: directory
     mode: '0755'
-  become: yes
+  become: true
 
 # - name: Initialize an empty list for lab host IP addresses
 #   set_fact:
@@ -33,7 +32,7 @@
       - ../bastion/files/gen_guac_hash.py
       - "{{ guacamole_pw }}"
   delegate_to: localhost
-  run_once: yes
+  run_once: true
   register: hash_script_output
 
 - name: Parse script output into multiple facts
@@ -42,7 +41,7 @@
   with_items: "{{ hash_script_output.stdout_lines }}"
 
 - name: Render entity json
-  become: yes
+  become: true
   ansible.builtin.template:
     src: guac_entity.j2
     dest: /opt/setup/guacamole/guac_entity.json
@@ -51,7 +50,7 @@
     mode: '0644'
 
 - name: Render user group json
-  become: yes
+  become: true
   ansible.builtin.template:
     src: guac_user_group.j2
     dest: /opt/setup/guacamole/guac_user_group.json
@@ -60,7 +59,7 @@
     mode: '0644'
 
 - name: Render user json
-  become: yes
+  become: true
   ansible.builtin.template:
     src: guac_user.j2
     dest: /opt/setup/guacamole/guac_user.json
@@ -69,7 +68,7 @@
     mode: '0644'
 
 - name: Render connection group json
-  become: yes
+  become: true
   ansible.builtin.template:
     src: guac_connection_group.j2
     dest: /opt/setup/guacamole/guac_connection_group.json
@@ -78,7 +77,7 @@
     mode: '0644'
 
 - name: Render connection json
-  become: yes
+  become: true
   ansible.builtin.template:
     src: guac_connection.j2
     dest: /opt/setup/guacamole/guac_connection.json
@@ -87,7 +86,7 @@
     mode: '0644'
 
 - name: Render connection parameter json
-  become: yes
+  become: true
   ansible.builtin.template:
     src: guac_connection_parameter.j2
     dest: /opt/setup/guacamole/guac_connection_parameter.json
@@ -96,7 +95,7 @@
     mode: '0644'
 
 - name: Render connection permission json
-  become: yes
+  become: true
   ansible.builtin.template:
     src: guac_connection_permission.j2
     dest: /opt/setup/guacamole/guac_connection_permission.json
@@ -105,7 +104,7 @@
     mode: '0644'
 
 - name: Render connection group permission json
-  become: yes
+  become: true
   ansible.builtin.template:
     src: guac_connection_group_permission.j2
     dest: /opt/setup/guacamole/guac_connection_group_permission.json
@@ -137,4 +136,3 @@
 - name: Execute guacamole install script
   ansible.builtin.command:
     cmd: bash /opt/setup/config_guacamole.sh
-  become: yes

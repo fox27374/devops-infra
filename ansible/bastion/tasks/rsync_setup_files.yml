@@ -3,13 +3,13 @@
   ansible.builtin.file:
     path: /opt/setup
     state: absent
-  become: yes
+  become: true
 
 - name: Sync setup files
   ansible.posix.synchronize:
     src: ../files/setup
     dest: /opt
-  become: yes
+  become: true
 
 - name: Change folder permissions
   ansible.builtin.file:
@@ -18,7 +18,7 @@
     recurse: yes
     owner: root
     group: root
-  become: yes
+  become: true
 
 - name: Get all script files
   ansible.builtin.find:
@@ -31,7 +31,7 @@
     path: "{{ item.path }}"
     mode: '0755'
   loop: "{{ script_files.files }}"
-  become: yes
+  become: true
 
 # - name: Render cilium values
 #   ansible.builtin.template:
@@ -40,4 +40,4 @@
 #     owner: root
 #     group: root
 #     mode: '0644'
-#   become: yes
+#   become: true

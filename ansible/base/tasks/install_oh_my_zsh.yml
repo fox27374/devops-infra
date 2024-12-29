@@ -3,34 +3,34 @@
   ansible.builtin.user:
     name: "{{ linux_user }}"
     shell: /bin/zsh
-  become: yes
+  become: true
 
 - name: Create setup directory
   ansible.builtin.file:
     path: /opt/setup
     state: directory
     mode: '0755'
-  become: yes
+  become: true
 
 - name: Download Oh My Zsh install script
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
     dest: /opt/setup/install_oh-my-zsh.sh
     mode: '0755'
-  become: yes
+  become: true
 
 - name: Remove global directory if it exists already
   ansible.builtin.file:
     path: /opt/ohmyzsh
     state: absent
-  become: yes
+  become: true
 
 - name: Install Oh My Zsh into the global directory
   environment:
     ZSH: /opt/ohmyzsh
   ansible.builtin.command:
     cmd: sh /opt/setup/install_oh-my-zsh.sh --unattended
-  become: yes
+  become: true
 
 - name: Copy .zshrc
   ansible.builtin.copy:
@@ -39,4 +39,4 @@
     owner: "{{ linux_user }}"
     group: "{{ linux_user }}"
     mode: '0644'
-  become: yes
+  become: true
