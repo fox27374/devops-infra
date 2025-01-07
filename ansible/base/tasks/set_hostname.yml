@@ -1,0 +1,6 @@
+---
+- name: Set hostname based on host variable
+  ansible.builtin.hostname:
+    name: "{{ instance_name }}"
+    use: debian
+  become: true
