@@ -11,7 +11,7 @@ resource "local_file" "ansible_inventory" {
   content = templatefile("${path.module}/templates/inventory.tftpl",
     {
       bastion_dns   = aws_route53_record.bastion
-      guacamole_dns = aws_route53_record.guacamole
+      bastion_instance_name = aws_instance.bastion.tags["Name"]
       lab_instances = aws_instance.lab.*
     }
   )

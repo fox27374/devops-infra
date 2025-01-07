@@ -4,12 +4,12 @@ all:
     ansible_ssh_private_key_file: ~/.ssh/id_aws_ansible
   children:
     bastion:
-      vars:
-        guacamole_dns: ${guacamole_dns.name}
       hosts:
         ${bastion_dns.name}:
+          instance_name: ${ bastion_instance_name }
     lab:
       hosts:
         %{~ for instance in lab_instances ~}
         ${ instance.private_ip }:
+          instance_name: ${ instance.tags["Name"] }
         %{~ endfor ~}

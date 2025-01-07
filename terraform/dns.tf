@@ -1,18 +1,3 @@
-# Create list of DNS entries used for record and certificate creation
-locals {
-  lab_dns_names = [
-    for instance in aws_instance.lab[*]: "${instance.tags["Name"]}.${var.NW["domain_name"]}"
-  ]
-
-  # Additional static or custom DNS names
-  additional_dns_names = [
-    var.NW["guacamole_dns_fqdn"],
-    var.NW["bastion_dns_fqdn"]
-  ]
-
-  dns_names = concat(local.lab_dns_names, local.additional_dns_names)
-}
-
 # # Create DNS zone
 # resource "aws_route53_zone" "devops" {
 #   name = "devops.ntslab.eu"
@@ -42,10 +27,12 @@ resource "aws_route53_record" "guacamole" {
 
 # Create all other DNS records (CNAME) pointing to the ALB
 resource "aws_route53_record" "lab" {
-  count   = length(local.lab_dns_names)
+  for_each = tomap({
+    for name in local.lab_instance_names : name => name
+  })
   #zone_id = aws_route53_zone.devops.zone_id
   zone_id = var.NW["dns_zone_id"]
-  name    = local.lab_dns_names[count.index]
+  name    = each.key
   type    = "CNAME"
   ttl     = 28800
   records = [aws_lb.devops-infra.dns_name]
@@ -75,7 +62,7 @@ resource "aws_route53_record" "lab_validation_record" {
 # Create a certificate with SAN entries for the DNS names
 resource "aws_acm_certificate" "lab" {
   domain_name               = var.NW["guacamole_dns_fqdn"]
-  subject_alternative_names = local.dns_names
+  subject_alternative_names = local.cert_dns_names
   validation_method         = "DNS"
 
   lifecycle {

@@ -30,3 +30,21 @@ resource "aws_instance" "lab" {
 }
 
 
+locals {
+  lab_instance_names = [
+    for instance in aws_instance.lab[*]: "${instance.tags["Name"]}"
+  ]
+
+  lab_dns_names = [
+    for instance in aws_instance.lab[*]: "${instance.tags["Name"]}.${var.NW["domain_name"]}"
+  ]
+
+  # Additional static or custom DNS names
+  additional_dns_names = [
+    var.NW["guacamole_dns_fqdn"],
+    var.NW["bastion_dns_fqdn"]
+  ]
+
+  cert_dns_names = concat(local.lab_dns_names, local.additional_dns_names)
+}
+
