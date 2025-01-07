@@ -1,5 +1,8 @@
 ---
-# tasks file for linux-training
+- name: Set hostname
+  ansible.builtin.include_tasks: set_hostname.yml
+  when:
+    - set_hostname
 
 - name: Add linux user
   ansible.builtin.include_tasks: add_linux_user.yml
