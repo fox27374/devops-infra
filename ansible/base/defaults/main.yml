@@ -1,5 +1,6 @@
 ---
 # defaults file for linux-training
+set_hostname: True
 add_linux_user: True
 add_user_sudo: True
 setup_ssh: True
