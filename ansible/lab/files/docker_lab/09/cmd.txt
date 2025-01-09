@@ -1,0 +1,8 @@
+# Setup Python environment
+cd app
+sudo apt install -y python3-venv
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install flask
+pip freeze > requirements.txt

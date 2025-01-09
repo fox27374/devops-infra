@@ -5,6 +5,7 @@
     "permission": "READ"
   },
 {% for ip in lab_ips %}
+{% for hostname, ip in hostname_ip.items() %}
 {% set id = ip | regex_search('(\d+)$') %}
   {
     "entity_id": {{ id }},

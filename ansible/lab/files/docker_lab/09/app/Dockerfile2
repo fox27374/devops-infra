@@ -1,0 +1,22 @@
+FROM python:3.9.21-alpine
+
+# Set variables
+ENV USER=app
+ENV GROUP=app
+ENV HOME=/home/$USER
+
+# Install Python requirements
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+
+# Create user and group
+RUN addgroup $GROUP
+RUN adduser -G $GROUP -h $HOME -D $USER
+
+# Change working directory and user
+WORKDIR $HOME
+USER $USER
+
+COPY --chown=$USER:$GROUP app.py .
+
+CMD [ "python3", "app.py"]

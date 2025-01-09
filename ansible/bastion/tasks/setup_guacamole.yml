@@ -1,4 +1,13 @@
 ---
+- name: Build hostname IP mapping
+  set_fact:
+    hostname_ip: "{{ hostname_ip | default([]) + [ { item.value.instance_name: item.key } ] }}"
+  with_dict: "{{ inventory.lab.hosts }}"
+
+- name: Debug hostname_ip
+  debug:
+    var: hostname_ip
+
 - name: Setup Guacamole
   ansible.builtin.command:
     cmd: bash /opt/setup/setup_guacamole.sh
