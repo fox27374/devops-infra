@@ -5,7 +5,6 @@
 
 # Create bastion DNS record
 resource "aws_route53_record" "bastion" {
-  #zone_id = aws_route53_zone.devops.zone_id
   zone_id = var.NW["dns_zone_id"]
   name    = var.NW["bastion_dns_fqdn"]
   type    = "A"
@@ -17,7 +16,6 @@ resource "aws_route53_record" "bastion" {
 
 # Create guacamole DNS records (CNAME) pointing to the ALB
 resource "aws_route53_record" "guacamole" {
-  #zone_id = aws_route53_zone.devops.zone_id
   zone_id = var.NW["dns_zone_id"]
   name    = var.NW["guacamole_dns_fqdn"]
   type    = "CNAME"
@@ -53,17 +51,19 @@ resource "aws_route53_record" "lab_validation_record" {
   records         = [each.value.record]
   ttl             = 60
   type            = each.value.type
-  #zone_id         = aws_route53_zone.devops.zone_id
-  zone_id = var.NW["dns_zone_id"]
+  zone_id         = var.NW["dns_zone_id"]
 
-  depends_on = [aws_route53_record.lab]
+  #depends_on = [aws_route53_record.lab]
 }
 
 # Create a certificate with SAN entries for the DNS names
 resource "aws_acm_certificate" "lab" {
   domain_name               = var.NW["guacamole_dns_fqdn"]
-  subject_alternative_names = local.cert_dns_names
+  #subject_alternative_names = local.cert_dns_names
+  subject_alternative_names = [var.NW["guacamole_dns_fqdn"], "*.aws.ntslab.eu"]
   validation_method         = "DNS"
+
+  #depends_on = [aws_route53_record.lab_validation_record]
 
   lifecycle {
     create_before_destroy = true
