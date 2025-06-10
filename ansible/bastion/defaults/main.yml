@@ -4,4 +4,4 @@ install_additional_packages: True
 setup_nginx: False
 rsync_setup_files: True
 setup_k3s: True
-setup_guacamole: True
+setup_guacamole: False
