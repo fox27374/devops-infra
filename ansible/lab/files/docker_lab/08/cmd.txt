@@ -1,3 +1,2 @@
 git clone https://github.com/fox27374/devops-workshop-repo.git
 docker build -t splunk:workshop .
-git pull
