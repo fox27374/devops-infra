@@ -50,12 +50,27 @@ resource "aws_lb_target_group_attachment" "guacamole" {
 }
 
 resource "aws_lb_target_group" "lab_tg" {
+  health_check {
+    interval            = 10
+    path                = "/"
+    protocol            = "HTTP"
+    timeout             = 5
+    healthy_threshold   = 3
+    unhealthy_threshold = 2
+    port = 80
+  }
   count        = var.EC2["lab_count"]
   name         = aws_instance.lab[count.index].tags["Name"]
   port         = 80
   protocol     = "HTTP"
   vpc_id      = aws_vpc.devops-infra.id
   target_type  = "instance"
+
+  stickiness {
+    enabled = true
+    type = "lb_cookie"
+    cookie_duration = 86400
+  }
 }
 
 resource "aws_lb_target_group_attachment" "lab_attachment" {
