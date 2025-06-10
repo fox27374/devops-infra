@@ -42,19 +42,6 @@ resource "aws_vpc_security_group_ingress_rule" "https_from_external" {
   }
 }
 
-resource "aws_vpc_security_group_ingress_rule" "custom_http_from_public" {
-  security_group_id = aws_security_group.public.id
-
-  description = "Custom HTTP from public"
-  cidr_ipv4   = var.NW["sn_public_cidr"]
-  ip_protocol = "tcp"
-  to_port     = 8080
-  from_port   = 0
-  tags = {
-    Name = "custom_http"
-  }
-}
-
 resource "aws_vpc_security_group_egress_rule" "public_to_external" {
   security_group_id = aws_security_group.public.id
 
