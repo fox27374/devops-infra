@@ -20,7 +20,7 @@ resource "aws_instance" "lab" {
   user_data              = file("cloud-config/user_data.cloud")
   vpc_security_group_ids = [aws_security_group.private.id]
   root_block_device {
-    volume_size = "20"
+    volume_size = var.EC2["lab_volume_size"]
   }
   tags = {
     Name = "${var.EC2["lab_name"]}${format("%02d", count.index + 1)}",
