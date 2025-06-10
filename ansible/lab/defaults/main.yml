@@ -2,7 +2,7 @@
 rsync_setup_files: True
 install_docker: True
 rsync_docker_lab: True
-install_k3s: True
-rsync_k8s_lab: True
+install_k3s: False
+rsync_k8s_lab: False
 setup_k8s_lab: False
 ...
