@@ -20,6 +20,12 @@
   when:
     - setup_ssh
 
+- name: Setup hosts file
+  import_tasks: setup_hosts_file.yml
+  tags: hosts
+  when:
+    - setup_hosts_file
+
 - name: Install software packages
   ansible.builtin.include_tasks: install_packages.yml
   when:
