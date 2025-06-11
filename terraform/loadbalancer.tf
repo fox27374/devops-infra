@@ -8,7 +8,7 @@ resource "aws_lb" "devops-infra" {
   enable_deletion_protection = false
 
   tags = {
-    Environment = "production"
+    Environment = "devops"
   }
 }
 
