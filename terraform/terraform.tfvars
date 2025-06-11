@@ -36,7 +36,7 @@ EC2 = {
   lab_ami               = "ami-0a422d70f727fe93e"
   lab_instance_type     = "t3.medium"
   lab_name              = "lab"
-  lab_count             = 1
+  lab_count             = 15
   lab_volume_size       = "30"
   bastion_name          = "bastion"
 }
