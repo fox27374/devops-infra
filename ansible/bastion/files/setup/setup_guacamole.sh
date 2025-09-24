@@ -4,7 +4,7 @@ YAMLDIR=/opt/setup/k3s
 
 # Wait for the traefik ingressroute to be ready
 check_crd() {
-    kubectl get crd ingressroutes.traefik.containo.us &> /dev/null
+    kubectl get crd ingressroutes.traefik.io &> /dev/null
     return $?
 }
 
