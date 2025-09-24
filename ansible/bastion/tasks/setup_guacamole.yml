@@ -1,12 +1,19 @@
 ---
+# - name: Build hostname IP mapping
+#   set_fact:
+#     hostname_ip: "{{ hostname_ip | default([]) + [ { item.value.instance_name: item.key } ] }}"
+#   with_dict: "{{ inventory.lab.hosts }}"
+
 - name: Build hostname IP mapping
   set_fact:
-    hostname_ip: "{{ hostname_ip | default([]) + [ { item.value.instance_name: item.key } ] }}"
-  with_dict: "{{ inventory.lab.hosts }}"
+    hostname_ip: "{{ hostname_ip | default([]) + [ { hostvars[item]['instance_name'] | default(item): hostvars[item]['ansible_host'] | default(hostvars[item]['ansible_ssh_host']) | default(item) } ] }}"
+  loop: "{{ groups['lab'] }}"
+  delegate_to: localhost
+  run_once: true
 
-- name: Debug hostname_ip
-  debug:
-    var: hostname_ip
+# - name: Debug hostname_ip
+#   debug:
+#     var: hostname_ip
 
 - name: Setup Guacamole
   ansible.builtin.command:
@@ -25,14 +32,14 @@
     mode: '0755'
   become: true
 
-# - name: Initialize an empty list for lab host IP addresses
-#   set_fact:
-#     lab_ips: []
+- name: Initialize an empty list for lab host IP addresses
+  set_fact:
+    lab_ips: []
 
-# - name: Add each lab host's IP to the list
-#   set_fact:
-#     lab_ips: "{{ lab_ips + [hostvars[item]['ansible_host'] | default(item)] }}"
-#   loop: "{{ groups['lab'] }}"
+- name: Add each lab host's IP to the list
+  set_fact:
+    lab_ips: "{{ lab_ips + [hostvars[item]['ansible_host'] | default(item)] }}"
+  loop: "{{ groups['lab'] }}"
 
 - name: Create salt and password hash
   ansible.builtin.command:
