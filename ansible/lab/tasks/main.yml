@@ -9,13 +9,20 @@
 - name: Install docker
   ansible.builtin.include_tasks: install_docker.yml
   when:
-    - lab_type == "docker"
+    - lab_type == "container"
     - install_docker
+
+# Podman
+- name: Install podman
+  ansible.builtin.include_tasks: install_podman.yml
+  when:
+    - lab_type == "container"
+    - install_podman
 
 - name: Rsync docker lab files
   ansible.builtin.include_tasks: rsync_docker_lab.yml
   when:
-    - lab_type == "docker"
+    - lab_type == "container"
     - rsync_docker_lab
 
 # k8s
