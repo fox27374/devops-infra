@@ -58,7 +58,7 @@ resource "aws_route53_record" "lab_validation_record" {
 
 # Create a certificate with SAN entries for the DNS names
 resource "aws_acm_certificate" "lab" {
-  domain_name               = var.NW["guacamole_dns_fqdn"]
+  domain_name = var.NW["guacamole_dns_fqdn"]
   #subject_alternative_names = local.cert_dns_names
   subject_alternative_names = [var.NW["guacamole_dns_fqdn"], "*.aws.ntslab.eu"]
   validation_method         = "DNS"
