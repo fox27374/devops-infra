@@ -6,8 +6,8 @@ resource "aws_instance" "bastion" {
   user_data              = file("cloud-config/user_data.cloud")
   vpc_security_group_ids = [aws_security_group.public.id]
   tags = {
-    Name    = var.EC2["bastion_name"],
-    Type    = "bastion"
+    Name = var.EC2["bastion_name"],
+    Type = "bastion"
   }
 }
 
@@ -24,7 +24,7 @@ resource "aws_instance" "lab" {
   }
   tags = {
     Name = "${var.EC2["lab_name"]}${format("%02d", count.index + 1)}",
-    ID = "${format("%02d", count.index + 1)}"
+    ID   = "${format("%02d", count.index + 1)}"
     Type = "lab"
   }
 }
@@ -32,11 +32,11 @@ resource "aws_instance" "lab" {
 
 locals {
   lab_instance_names = [
-    for instance in aws_instance.lab[*]: "${instance.tags["Name"]}"
+    for instance in aws_instance.lab[*] : "${instance.tags["Name"]}"
   ]
 
   lab_dns_names = [
-    for instance in aws_instance.lab[*]: "${instance.tags["Name"]}.${var.NW["domain_name"]}"
+    for instance in aws_instance.lab[*] : "${instance.tags["Name"]}.${var.NW["domain_name"]}"
   ]
 
   # Additional static or custom DNS names
