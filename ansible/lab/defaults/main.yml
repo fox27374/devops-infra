@@ -1,6 +1,7 @@
 ---
 rsync_setup_files: True
-install_docker: True
+install_docker: False
+install_podman: True
 rsync_docker_lab: True
 install_k3s: False
 rsync_k8s_lab: False
