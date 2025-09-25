@@ -32,13 +32,13 @@ resource "aws_lb_target_group" "guacamole" {
     interval            = 10
     path                = "/"
     protocol            = "HTTP"
-    port = 8080
+    port                = 80
     timeout             = 5
     healthy_threshold   = 5
     unhealthy_threshold = 2
   }
   name        = "guacamole"
-  port        = 8080
+  port        = 80
   protocol    = "HTTP"
   target_type = "instance"
   vpc_id      = aws_vpc.devops-infra.id
@@ -47,7 +47,7 @@ resource "aws_lb_target_group" "guacamole" {
 resource "aws_lb_target_group_attachment" "guacamole" {
   target_group_arn = aws_lb_target_group.guacamole.arn
   target_id        = aws_instance.bastion.id
-  port             = 8080
+  port             = 80
 }
 
 resource "aws_lb_target_group" "lab_tg" {
