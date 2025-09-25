@@ -46,8 +46,8 @@ resource "aws_vpc_security_group_ingress_rule" "alb-2-public-http-in" {
 
   description                  = "alb-2-public-http-in"
   ip_protocol                  = "tcp"
-  to_port                      = 8080
-  from_port                    = 8080
+  to_port                      = 80
+  from_port                    = 80
   referenced_security_group_id = aws_security_group.alb.id
   tags = {
     Name = "http"
@@ -145,8 +145,8 @@ resource "aws_vpc_security_group_egress_rule" "alb-2-public-http-out" {
   description = "alb-2-public-http-out"
   ip_protocol = "tcp"
   cidr_ipv4   = var.NW["sn_public_cidr"]
-  to_port     = 8080
-  from_port   = 8080
+  to_port     = 80
+  from_port   = 80
   tags = {
     Name = "http"
   }
