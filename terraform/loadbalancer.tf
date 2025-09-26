@@ -61,7 +61,10 @@ resource "aws_lb_target_group" "lab_tg" {
     port                = 80
   }
   count       = var.EC2["lab_count"]
-  name        = aws_instance.lab[count.index].tags["Name"]
+  name = "lab${format(
+    "%03d",
+    element(split(".", aws_instance.lab[count.index].private_ip), 3)
+  )}"
   port        = 80
   protocol    = "HTTP"
   vpc_id      = aws_vpc.devops-infra.id
@@ -109,7 +112,7 @@ resource "aws_lb_listener_rule" "lab_listener_rule" {
 
   condition {
     host_header {
-      values = ["${aws_instance.lab[count.index].tags["Name"]}.${var.NW["domain_name"]}"]
+      values = ["lab${format("%03d",element(split(".", aws_instance.lab[count.index].private_ip), 3))}.${var.NW["domain_name"]}"]
     }
   }
 
@@ -119,6 +122,6 @@ resource "aws_lb_listener_rule" "lab_listener_rule" {
   }
 
   tags = {
-    Name = "${aws_instance.lab[count.index].tags["Name"]}"
+    Name = "lab${format("%03d",element(split(".", aws_instance.lab[count.index].private_ip), 3))}"
   }
 }
