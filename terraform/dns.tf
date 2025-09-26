@@ -25,12 +25,10 @@ resource "aws_route53_record" "guacamole" {
 
 # Create all other DNS records (CNAME) pointing to the ALB
 resource "aws_route53_record" "lab" {
-  for_each = tomap({
-    for name in local.lab_instance_names : name => name
-  })
+  count   = var.EC2["lab_count"]
   #zone_id = aws_route53_zone.devops.zone_id
   zone_id = var.NW["dns_zone_id"]
-  name    = each.key
+  name    = "lab${format("%03d",element(split(".", aws_instance.lab[count.index].private_ip), 3))}"
   type    = "CNAME"
   ttl     = 28800
   records = [aws_lb.devops-infra.dns_name]
