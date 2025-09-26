@@ -12,5 +12,5 @@ all:
       hosts:
         %{~ for instance in lab_instances ~}
         ${ instance.private_ip }:
-          instance_name: ${ instance.tags["Name"] }
+          instance_name: lab${ format("%03d", element(split(".", instance.private_ip), 3)) }
         %{~ endfor ~}
