@@ -1,5 +1,5 @@
 Name,LabName,IP,Username,Password,HTTP
 %{ for instance in lab_instances ~}
-,${instance.tags["Name"]},${instance.private_ip},student,supersecure,https://${instance.tags["Name"]}.aws.ntslab.eu
+,lab${ format("%03d", element(split(".", instance.private_ip), 3)) },${instance.private_ip},student,supersecure,https://lab${ format("%03d", element(split(".", instance.private_ip), 3)) }.aws.ntslab.eu
 
 %{~ endfor ~}
