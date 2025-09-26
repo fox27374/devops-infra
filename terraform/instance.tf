@@ -23,20 +23,32 @@ resource "aws_instance" "lab" {
     volume_size = var.EC2["lab_volume_size"]
   }
   tags = {
-    Name = "${var.EC2["lab_name"]}${format("%02d", count.index + 1)}",
     ID   = "${format("%02d", count.index + 1)}"
     Type = "lab"
   }
 }
 
+# Set instance name based on IP
+resource "aws_ec2_tag" "lab_name_tag" {
+  for_each = { for i, inst in aws_instance.lab : i => inst }
+
+  resource_id = each.value.id
+  key         = "Name"
+  value       = "lab${format("%03d", element(split(".", each.value.private_ip), 3))}"
+
+  depends_on = [aws_instance.lab]
+}
+
 
 locals {
   lab_instance_names = [
-    for instance in aws_instance.lab[*] : "${instance.tags["Name"]}"
+    for instance in aws_instance.lab[*] :
+    "lab${format("%03d", element(split(".", instance.private_ip), 3))}"
   ]
 
   lab_dns_names = [
-    for instance in aws_instance.lab[*] : "${instance.tags["Name"]}.${var.NW["domain_name"]}"
+    for name in local.lab_instance_names :
+    "${name}.${var.NW["domain_name"]}"
   ]
 
   # Additional static or custom DNS names
@@ -46,5 +58,7 @@ locals {
   ]
 
   cert_dns_names = concat(local.lab_dns_names, local.additional_dns_names)
+
+  depends_on = [aws_instance.lab]
 }
 
