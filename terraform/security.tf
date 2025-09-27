@@ -25,6 +25,15 @@ resource "aws_security_group" "alb" {
   }
 }
 
+resource "aws_security_group" "bastion" {
+  name        = "Bastion"
+  description = "Bastion"
+  vpc_id      = aws_vpc.devops-infra.id
+  tags = {
+    Name = "Bastion"
+  }
+}
+
 # INGRESS RULES
 # External to ALB HTTPS
 resource "aws_vpc_security_group_ingress_rule" "external-2-alb-https" {
@@ -68,29 +77,29 @@ resource "aws_vpc_security_group_ingress_rule" "external-2-public-ssh" {
   }
 }
 
-# Public to private subnet SSH
-resource "aws_vpc_security_group_ingress_rule" "public-2-private-ssh" {
+# Bastion to private subnet SSH
+resource "aws_vpc_security_group_ingress_rule" "bastion-2-private-ssh" {
   security_group_id = aws_security_group.private.id
 
-  description = "public-2-private-ssh"
+  description = "bastion-2-private-ssh"
   ip_protocol = "tcp"
   to_port     = 22
   from_port   = 22
-  cidr_ipv4   = var.NW["sn_public_cidr"]
+  referenced_security_group_id = aws_security_group.bastion.id
   tags = {
     Name = "ssh"
   }
 }
 
-# Public to private subnet HTTP
-resource "aws_vpc_security_group_ingress_rule" "public-2-private-http" {
+# Bastion to private subnet HTTP
+resource "aws_vpc_security_group_ingress_rule" "bastion-2-private-http" {
   security_group_id = aws_security_group.private.id
 
-  description = "public-2-private-http"
+  description = "bastion-2-private-http"
   ip_protocol = "tcp"
   to_port     = 80
   from_port   = 80
-  cidr_ipv4   = var.NW["sn_public_cidr"]
+  referenced_security_group_id = aws_security_group.bastion.id
   tags = {
     Name = "http"
   }
