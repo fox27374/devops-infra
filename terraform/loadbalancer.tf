@@ -58,14 +58,14 @@ resource "aws_lb_target_group" "lab_tg" {
     timeout             = 5
     healthy_threshold   = 3
     unhealthy_threshold = 2
-    port                = 80
+    port                = 8080
   }
   count       = var.EC2["lab_count"]
   name = "lab${format(
     "%03d",
     element(split(".", aws_instance.lab[count.index].private_ip), 3)
   )}"
-  port        = 80
+  port        = 8080
   protocol    = "HTTP"
   vpc_id      = aws_vpc.devops-infra.id
   target_type = "instance"
@@ -81,7 +81,7 @@ resource "aws_lb_target_group_attachment" "lab_attachment" {
   count            = var.EC2["lab_count"]
   target_group_arn = aws_lb_target_group.lab_tg[count.index].arn
   target_id        = aws_instance.lab[count.index].id
-  port             = 80
+  port             = 8080
 
   depends_on = [aws_lb_target_group.lab_tg]
 }
