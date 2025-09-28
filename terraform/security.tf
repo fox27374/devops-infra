@@ -34,168 +34,163 @@ resource "aws_security_group" "bastion" {
   }
 }
 
-# INGRESS RULES
-# External to ALB HTTPS
-resource "aws_vpc_security_group_ingress_rule" "external-2-alb-https" {
+#############
+# ALB RULES #
+#############
+# External to ALB HTTPS IN
+resource "aws_vpc_security_group_ingress_rule" "external-https-in" {
   security_group_id = aws_security_group.alb.id
 
-  description = "external-2-alb-https"
+  description = "External HTTPS IN"
   cidr_ipv4   = var.NW["external_v4_cidr"]
   ip_protocol = "tcp"
   to_port     = 443
   from_port   = 443
   tags = {
-    Name = "https"
+    Name = "External HTTPS IN"
   }
 }
 
-# ALB to public subnet HTTP
-resource "aws_vpc_security_group_ingress_rule" "alb-2-public-http-in" {
-  security_group_id = aws_security_group.public.id
-
-  description                  = "alb-2-public-http-in"
-  ip_protocol                  = "tcp"
-  to_port                      = 80
-  from_port                    = 80
-  referenced_security_group_id = aws_security_group.alb.id
-  tags = {
-    Name = "http"
-  }
-}
-
-# External to public subnet SSH
-resource "aws_vpc_security_group_ingress_rule" "external-2-public-ssh" {
-  security_group_id = aws_security_group.public.id
-
-  description = "external-2-public-ssh"
-  cidr_ipv4   = var.NW["external_v4_cidr"]
-  ip_protocol = "tcp"
-  to_port     = 22
-  from_port   = 22
-  tags = {
-    Name = "ssh"
-  }
-}
-
-# Bastion to private subnet SSH
-resource "aws_vpc_security_group_ingress_rule" "bastion-2-private-ssh" {
-  security_group_id = aws_security_group.private.id
-
-  description = "bastion-2-private-ssh"
-  ip_protocol = "tcp"
-  to_port     = 22
-  from_port   = 22
-  referenced_security_group_id = aws_security_group.bastion.id
-  tags = {
-    Name = "ssh"
-  }
-}
-
-# Bastion to private subnet HTTP
-resource "aws_vpc_security_group_ingress_rule" "bastion-2-private-http" {
-  security_group_id = aws_security_group.private.id
-
-  description = "bastion-2-private-http"
-  ip_protocol = "tcp"
-  to_port     = 80
-  from_port   = 80
-  referenced_security_group_id = aws_security_group.bastion.id
-  tags = {
-    Name = "http"
-  }
-}
-
-# Private to private subnet SSH
-resource "aws_vpc_security_group_ingress_rule" "private-2-private-ssh" {
-  security_group_id = aws_security_group.private.id
-
-  description = "private-2-private-ssh"
-  ip_protocol = "tcp"
-  to_port     = 22
-  from_port   = 22
-  cidr_ipv4   = var.NW["sn_private_cidr"]
-  tags = {
-    Name = "ssh"
-  }
-}
-
-# Public to private subnet ICMP
-resource "aws_vpc_security_group_ingress_rule" "public-2-private-icmp" {
-  security_group_id = aws_security_group.private.id
-
-  description = "public-2-private-icmp"
-  ip_protocol = "icmp"
-  from_port   = 8
-  to_port     = 0
-  cidr_ipv4   = var.NW["sn_private_cidr"]
-  tags = {
-    Name = "icmp"
-  }
-}
-
-# resource "aws_vpc_security_group_ingress_rule" "external-2-public-https" {
-#   security_group_id = aws_security_group.public.id
-
-#   description = "external-2-public-https"
-#   cidr_ipv4   = var.NW["external_v4_cidr"]
-#   ip_protocol = "tcp"
-#   to_port     = 443
-#   from_port   = 0
-#   tags = {
-#     Name = "https"
-#   }
-# }
-
-# EGRESS RULES
-# ALB to public HTTP
-resource "aws_vpc_security_group_egress_rule" "alb-2-public-http-out" {
+# ALB to public HTTP OUT
+resource "aws_vpc_security_group_egress_rule" "public-http-out" {
   security_group_id = aws_security_group.alb.id
 
-  description = "alb-2-public-http-out"
+  description = "Public HTTP OUT"
   ip_protocol = "tcp"
   cidr_ipv4   = var.NW["sn_public_cidr"]
   to_port     = 80
   from_port   = 80
   tags = {
-    Name = "http"
+    Name = "Public HTTP OUT"
   }
 }
 
-# # ALB to private HTTP
-# resource "aws_vpc_security_group_egress_rule" "alb-2-private-http" {
-#   security_group_id = aws_security_group.alb.id
+# ALB to private HTTP OUT
+resource "aws_vpc_security_group_egress_rule" "alb-2-private-http" {
+  security_group_id = aws_security_group.alb.id
 
-#   description = "alb-2-private-http"
-#   ip_protocol                  = "tcp"
-#   cidr_ipv4   = var.NW["sn_private_cidr"]
-#   to_port                      = 80
-#   from_port                    = 80
-#   tags = {
-#     Name = "http"
-#   }
-# }
+  description = "alb-2-private-http"
+  ip_protocol                  = "tcp"
+  cidr_ipv4   = var.NW["sn_private_cidr"]
+  to_port                      = 80
+  from_port                    = 80
+  tags = {
+    Name = "alb-2-private-http"
+  }
+}
 
+################
+# PUBLIC RULES #
+################
 
-# Public to external ALL
-resource "aws_vpc_security_group_egress_rule" "public-2-external-all" {
+# ALB to public subnet HTTP IN
+resource "aws_vpc_security_group_ingress_rule" "alb-http-in" {
   security_group_id = aws_security_group.public.id
 
-  description = "public-2-external-all"
-  cidr_ipv4   = var.NW["external_v4_cidr"]
-  ip_protocol = "-1"
+  description                  = "ALB HTTP IN"
+  ip_protocol                  = "tcp"
+  to_port                      = 80
+  from_port                    = 80
+  referenced_security_group_id = aws_security_group.alb.id
   tags = {
-    Name = "internet"
+    Name = "ALB HTTP IN"
   }
 }
 
-# Private to external ALL
-resource "aws_vpc_security_group_egress_rule" "private-2-external-all" {
-  security_group_id = aws_security_group.private.id
+# External to public subnet SSH IN
+resource "aws_vpc_security_group_ingress_rule" "external-ssh-in" {
+  security_group_id = aws_security_group.public.id
 
-  description = "private-2-external-all"
+  description = "External SSH IN"
+  cidr_ipv4   = var.NW["external_v4_cidr"]
+  ip_protocol = "tcp"
+  to_port     = 22
+  from_port   = 22
+  tags = {
+    Name = "External SSH IN"
+  }
+}
+
+# Public to external ALL OUT
+resource "aws_vpc_security_group_egress_rule" "external-public-all-out" {
+  security_group_id = aws_security_group.public.id
+
+  description = "External ALL OUT"
   cidr_ipv4   = var.NW["external_v4_cidr"]
   ip_protocol = "-1"
   tags = {
-    Name = "internet"
+    Name = "External ALL OUT"
+  }
+}
+
+#################
+# PRIVATE RULES #
+#################
+
+# Bastion to private subnet SSH IN
+resource "aws_vpc_security_group_ingress_rule" "bastion-ssh-in" {
+  security_group_id = aws_security_group.private.id
+
+  description = "Bastion SSH IN"
+  ip_protocol = "tcp"
+  to_port     = 22
+  from_port   = 22
+  referenced_security_group_id = aws_security_group.bastion.id
+  tags = {
+    Name = "Bastion SSH IN"
+  }
+}
+
+# Bastion to private subnet HTTP IN
+resource "aws_vpc_security_group_ingress_rule" "bastion-http-in" {
+  security_group_id = aws_security_group.private.id
+
+  description = "Bastion HTTP IN"
+  ip_protocol = "tcp"
+  to_port     = 80
+  from_port   = 80
+  referenced_security_group_id = aws_security_group.bastion.id
+  tags = {
+    Name = "Bastion HTTP IN"
+  }
+}
+
+# Private to private subnet SSH IN
+resource "aws_vpc_security_group_ingress_rule" "private-ssh-in" {
+  security_group_id = aws_security_group.private.id
+
+  description = "Private SSH IN"
+  ip_protocol = "tcp"
+  to_port     = 22
+  from_port   = 22
+  cidr_ipv4   = var.NW["sn_private_cidr"]
+  tags = {
+    Name = "Private SSH IN"
+  }
+}
+
+# Public to private subnet ICMP IN
+resource "aws_vpc_security_group_ingress_rule" "public-icmp-in" {
+  security_group_id = aws_security_group.private.id
+
+  description = "Public ICMP IN"
+  ip_protocol = "icmp"
+  from_port   = 8
+  to_port     = 0
+  cidr_ipv4   = var.NW["sn_public_cidr"]
+  tags = {
+    Name = "Public ICMP IN"
+  }
+}
+
+# Private to external ALL OUT
+resource "aws_vpc_security_group_egress_rule" "external-private-all-out" {
+  security_group_id = aws_security_group.private.id
+
+  description = "External ALL OUT"
+  cidr_ipv4   = var.NW["external_v4_cidr"]
+  ip_protocol = "-1"
+  tags = {
+    Name = "External ALL OUT"
   }
 }
