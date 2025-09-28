@@ -4,7 +4,7 @@ resource "aws_instance" "bastion" {
   instance_type          = var.EC2["bastion_instance_type"]
   subnet_id              = aws_subnet.public.id
   user_data              = file("cloud-config/user_data.cloud")
-  vpc_security_group_ids = [aws_security_group.public.id]
+  vpc_security_group_ids = [aws_security_group.bastion.id, aws_security_group.public.id]
   tags = {
     Name = var.EC2["bastion_name"],
     Type = "bastion"
