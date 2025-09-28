@@ -11,6 +11,22 @@ resource "aws_instance" "bastion" {
   }
 }
 
+# Create Splunk instance
+resource "aws_instance" "splunk" {
+  ami                    = var.EC2["splunk_ami"]
+  instance_type          = var.EC2["splunk_instance_type"]
+  subnet_id              = aws_subnet.public.id
+  user_data              = file("cloud-config/user_data.cloud")
+  vpc_security_group_ids = [aws_security_group.splunk.id, aws_security_group.public.id]
+  root_block_device {
+    volume_size = var.EC2["splunk_volume_size"]
+  }
+  tags = {
+    Name = var.EC2["splunk_name"],
+    Type = "splunk"
+  }
+}
+
 # Create ab instances
 resource "aws_instance" "lab" {
   count                  = var.EC2["lab_count"]

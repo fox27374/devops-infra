@@ -23,6 +23,15 @@ resource "aws_route53_record" "guacamole" {
   records = [aws_lb.devops-infra.dns_name]
 }
 
+# Create splunk DNS record
+resource "aws_route53_record" "splunk" {
+  zone_id = var.NW["dns_zone_id"]
+  name    = var.NW["splunk_dns_fqdn"]
+  type    = "A"
+  ttl     = 28800
+  records = [aws_lb.devops-infra.dns_name]
+}
+
 # Create all other DNS records (CNAME) pointing to the ALB
 resource "aws_route53_record" "lab" {
   count   = var.EC2["lab_count"]
