@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: splunk
+  namespace: splunk
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: splunk
+  template:
+    metadata:
+      labels:
+        app: splunk
+    spec:
+      enableServiceLinks: false
+      containers:
+      - name: splunk
+        image: splunk/splunk:10.0.1
+        envFrom:
+        - secretRef:
+            name: splunk
+
+

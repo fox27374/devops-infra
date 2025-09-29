@@ -1,0 +1,5 @@
+---
+# defaults file for splunk
+rsync_setup_files: True
+setup_k3s: True
+setup_splunk: False

@@ -38,6 +38,10 @@ variable "EC2" {
   type = map(any)
 }
 
+variable "cert_sans" {
+  type    = list(string)
+}
+
 provider "aws" {
   region  = var.GEN["region"]
   profile = "nts"

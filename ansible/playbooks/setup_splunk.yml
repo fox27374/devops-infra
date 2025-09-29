@@ -1,0 +1,7 @@
+- name: Setup splunk
+  hosts: splunk
+  vars_files:
+    - ../vault.yml
+  roles:
+    - role: splunk
+

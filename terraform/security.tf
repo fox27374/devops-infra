@@ -64,11 +64,11 @@ resource "aws_vpc_security_group_ingress_rule" "external-https-in" {
 resource "aws_vpc_security_group_egress_rule" "bastion-http-out" {
   security_group_id = aws_security_group.alb.id
 
-  description = "Bastion HTTP OUT"
-  ip_protocol = "tcp"
+  description                  = "Bastion HTTP OUT"
+  ip_protocol                  = "tcp"
   referenced_security_group_id = aws_security_group.bastion.id
-  to_port     = 80
-  from_port   = 80
+  to_port                      = 80
+  from_port                    = 80
   tags = {
     Name = "Bastion HTTP OUT"
   }
@@ -78,11 +78,11 @@ resource "aws_vpc_security_group_egress_rule" "bastion-http-out" {
 resource "aws_vpc_security_group_egress_rule" "splunk-http-out" {
   security_group_id = aws_security_group.alb.id
 
-  description = "Splunk HTTP OUT"
-  ip_protocol = "tcp"
-  referenced_security_group_id = aws_security_group.bastion.id
-  to_port     = 80
-  from_port   = 80
+  description                  = "Splunk HTTP OUT"
+  ip_protocol                  = "tcp"
+  referenced_security_group_id = aws_security_group.splunk.id
+  to_port                      = 8000
+  from_port                    = 8000
   tags = {
     Name = "Splunk HTTP OUT"
   }
@@ -93,10 +93,10 @@ resource "aws_vpc_security_group_egress_rule" "private-http-out" {
   security_group_id = aws_security_group.alb.id
 
   description = "Private HTTP OUT"
-  ip_protocol                  = "tcp"
+  ip_protocol = "tcp"
   cidr_ipv4   = var.NW["sn_private_cidr"]
-  to_port                      = 8080
-  from_port                    = 8080
+  to_port     = 8080
+  from_port   = 8080
   tags = {
     Name = "Private HTTP OUT"
   }
@@ -164,17 +164,29 @@ resource "aws_vpc_security_group_ingress_rule" "alb-splunk-http-in" {
   }
 }
 
-# External to Bastion SSH IN
-resource "aws_vpc_security_group_ingress_rule" "external-splunk-ssh-in" {
-  security_group_id = aws_security_group.bastion.id
+# Bastion to Splunk SSH IN
+resource "aws_vpc_security_group_ingress_rule" "bastion-splunk-ssh-in" {
+  security_group_id = aws_security_group.splunk.id
 
-  description = "External SSH IN"
-  cidr_ipv4   = var.NW["external_v4_cidr"]
-  ip_protocol = "tcp"
-  to_port     = 22
-  from_port   = 22
+  description                  = "Bastion SSH IN"
+  referenced_security_group_id = aws_security_group.bastion.id
+  ip_protocol                  = "tcp"
+  to_port                      = 22
+  from_port                    = 22
   tags = {
-    Name = "External SSH IN"
+    Name = "Bastion SSH IN"
+  }
+}
+
+# Splunk to external ALL OUT
+resource "aws_vpc_security_group_egress_rule" "external-splunk-all-out" {
+  security_group_id = aws_security_group.splunk.id
+
+  description = "External ALL OUT"
+  cidr_ipv4   = var.NW["external_v4_cidr"]
+  ip_protocol = "-1"
+  tags = {
+    Name = "External ALL OUT"
   }
 }
 
@@ -186,10 +198,10 @@ resource "aws_vpc_security_group_ingress_rule" "external-splunk-ssh-in" {
 resource "aws_vpc_security_group_ingress_rule" "alb-private-http-in" {
   security_group_id = aws_security_group.private.id
 
-  description = "ALB HTTP IN"
-  ip_protocol = "tcp"
-  to_port     = 8080
-  from_port   = 8080
+  description                  = "ALB HTTP IN"
+  ip_protocol                  = "tcp"
+  to_port                      = 8080
+  from_port                    = 8080
   referenced_security_group_id = aws_security_group.alb.id
   tags = {
     Name = "ALB HTTP IN"
@@ -200,10 +212,10 @@ resource "aws_vpc_security_group_ingress_rule" "alb-private-http-in" {
 resource "aws_vpc_security_group_ingress_rule" "bastion-ssh-in" {
   security_group_id = aws_security_group.private.id
 
-  description = "Bastion SSH IN"
-  ip_protocol = "tcp"
-  to_port     = 22
-  from_port   = 22
+  description                  = "Bastion SSH IN"
+  ip_protocol                  = "tcp"
+  to_port                      = 22
+  from_port                    = 22
   referenced_security_group_id = aws_security_group.bastion.id
   tags = {
     Name = "Bastion SSH IN"
@@ -214,10 +226,10 @@ resource "aws_vpc_security_group_ingress_rule" "bastion-ssh-in" {
 resource "aws_vpc_security_group_ingress_rule" "bastion-http-in" {
   security_group_id = aws_security_group.private.id
 
-  description = "Bastion HTTP IN"
-  ip_protocol = "tcp"
-  to_port     = 80
-  from_port   = 80
+  description                  = "Bastion HTTP IN"
+  ip_protocol                  = "tcp"
+  to_port                      = 80
+  from_port                    = 80
   referenced_security_group_id = aws_security_group.bastion.id
   tags = {
     Name = "Bastion HTTP IN"

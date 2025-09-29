@@ -21,8 +21,14 @@ NW = {
   domain_name        = "aws.ntslab.eu"
   guacamole_dns_fqdn = "guacamole.aws.ntslab.eu"
   bastion_dns_fqdn   = "bastion.aws.ntslab.eu"
-  splunk_dns_fqdn   = "bastion.aws.ntslab.eu"
+  splunk_dns_fqdn    = "splunk.aws.ntslab.eu"
 }
+
+# Certificate variables
+cert_sans = [
+    "guacamole.aws.ntslab.eu",
+    "splunk.aws.ntslab.eu",
+    "*.aws.ntslab.eu" ]
 
 # Security variables
 SEC = {
@@ -35,10 +41,10 @@ EC2 = {
   bastion_ami           = "ami-0bc691261a82b32bc" # Ubuntu 24.04 x86
   bastion_instance_type = "t3.medium"             # x86
   bastion_name          = "bastion"
-  splunk_ami           = "ami-0bc691261a82b32bc" # Ubuntu 24.04 x86
-  splunk_instance_type = "t3.medium"             # x86
-  splunk_volume_size       = "100"
-  splunk_name = "splunk"
+  splunk_ami            = "ami-0bc691261a82b32bc" # Ubuntu 24.04 x86
+  splunk_instance_type  = "t3.medium"             # x86
+  splunk_volume_size    = "100"
+  splunk_name           = "splunk"
   lab_ami               = "ami-0bc691261a82b32bc"
   lab_instance_type     = "t3.medium"
   lab_name              = "lab"

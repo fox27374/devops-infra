@@ -50,6 +50,29 @@ resource "aws_lb_target_group_attachment" "guacamole" {
   port             = 80
 }
 
+resource "aws_lb_target_group" "splunk" {
+  health_check {
+    interval            = 10
+    path                = "/"
+    protocol            = "HTTP"
+    port                = 80
+    timeout             = 5
+    healthy_threshold   = 5
+    unhealthy_threshold = 2
+  }
+  name        = "splunk"
+  port        = 8000
+  protocol    = "HTTP"
+  target_type = "instance"
+  vpc_id      = aws_vpc.devops-infra.id
+}
+
+resource "aws_lb_target_group_attachment" "splunk" {
+  target_group_arn = aws_lb_target_group.splunk.arn
+  target_id        = aws_instance.splunk.id
+  port             = 8000
+}
+
 resource "aws_lb_target_group" "lab_tg" {
   health_check {
     interval            = 10
@@ -60,7 +83,7 @@ resource "aws_lb_target_group" "lab_tg" {
     unhealthy_threshold = 2
     port                = 8080
   }
-  count       = var.EC2["lab_count"]
+  count = var.EC2["lab_count"]
   name = "lab${format(
     "%03d",
     element(split(".", aws_instance.lab[count.index].private_ip), 3)
@@ -112,7 +135,7 @@ resource "aws_lb_listener_rule" "lab_listener_rule" {
 
   condition {
     host_header {
-      values = ["lab${format("%03d",element(split(".", aws_instance.lab[count.index].private_ip), 3))}.${var.NW["domain_name"]}"]
+      values = ["lab${format("%03d", element(split(".", aws_instance.lab[count.index].private_ip), 3))}.${var.NW["domain_name"]}"]
     }
   }
 
@@ -122,6 +145,6 @@ resource "aws_lb_listener_rule" "lab_listener_rule" {
   }
 
   tags = {
-    Name = "lab${format("%03d",element(split(".", aws_instance.lab[count.index].private_ip), 3))}"
+    Name = "lab${format("%03d", element(split(".", aws_instance.lab[count.index].private_ip), 3))}"
   }
 }

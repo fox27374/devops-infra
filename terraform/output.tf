@@ -12,6 +12,8 @@ resource "local_file" "ansible_inventory" {
     {
       bastion_dns           = aws_route53_record.bastion
       bastion_instance_name = aws_instance.bastion.tags["Name"]
+      splunk_instance = aws_instance.splunk
+      splunk_instance_name = aws_instance.splunk.tags["Name"]
       lab_instances         = aws_instance.lab.*
     }
   )

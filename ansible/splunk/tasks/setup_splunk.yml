@@ -1,0 +1,5 @@
+---
+- name: Setup Splunk
+  ansible.builtin.command:
+    cmd: bash /opt/setup/setup_splunk.sh
+  

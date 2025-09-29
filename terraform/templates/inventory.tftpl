@@ -8,6 +8,10 @@ all:
       hosts:
         ${bastion_dns.name}:
           instance_name: ${ bastion_instance_name }
+    splunk:
+      hosts:
+        ${splunk_instance.private_ip}:
+          instance_name: ${ splunk_instance_name }
     lab:
       hosts:
         %{~ for instance in lab_instances ~}

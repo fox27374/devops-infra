@@ -1,0 +1,17 @@
+---
+# tasks file for splunk
+- name: Rsync setup files
+  ansible.builtin.include_tasks: rsync_setup_files.yml
+  when:
+    - rsync_setup_files
+
+- name: Setup k3s
+  ansible.builtin.include_tasks: setup_k3s.yml
+  when:
+    - setup_k3s
+
+- name: Setup Splunk
+  ansible.builtin.include_tasks: setup_splunk.yml
+  when:
+    - setup_splunk
+

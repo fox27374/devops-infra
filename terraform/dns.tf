@@ -27,17 +27,17 @@ resource "aws_route53_record" "guacamole" {
 resource "aws_route53_record" "splunk" {
   zone_id = var.NW["dns_zone_id"]
   name    = var.NW["splunk_dns_fqdn"]
-  type    = "A"
+  type    = "CNAME"
   ttl     = 28800
   records = [aws_lb.devops-infra.dns_name]
 }
 
 # Create all other DNS records (CNAME) pointing to the ALB
 resource "aws_route53_record" "lab" {
-  count   = var.EC2["lab_count"]
+  count = var.EC2["lab_count"]
   #zone_id = aws_route53_zone.devops.zone_id
   zone_id = var.NW["dns_zone_id"]
-  name    = "lab${format("%03d",element(split(".", aws_instance.lab[count.index].private_ip), 3))}"
+  name    = "lab${format("%03d", element(split(".", aws_instance.lab[count.index].private_ip), 3))}"
   type    = "CNAME"
   ttl     = 28800
   records = [aws_lb.devops-infra.dns_name]
@@ -65,9 +65,8 @@ resource "aws_route53_record" "lab_validation_record" {
 
 # Create a certificate with SAN entries for the DNS names
 resource "aws_acm_certificate" "lab" {
-  domain_name = var.NW["guacamole_dns_fqdn"]
-  #subject_alternative_names = local.cert_dns_names
-  subject_alternative_names = [var.NW["guacamole_dns_fqdn"], "*.aws.ntslab.eu"]
+  domain_name = var.cert_sans[0]
+  subject_alternative_names = slice(var.cert_sans, 1, length(var.cert_sans))
   validation_method         = "DNS"
 
   #depends_on = [aws_route53_record.lab_validation_record]
