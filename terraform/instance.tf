@@ -15,9 +15,9 @@ resource "aws_instance" "bastion" {
 resource "aws_instance" "splunk" {
   ami                    = var.EC2["splunk_ami"]
   instance_type          = var.EC2["splunk_instance_type"]
-  subnet_id              = aws_subnet.public.id
+  subnet_id              = aws_subnet.private.id
   user_data              = file("cloud-config/user_data.cloud")
-  vpc_security_group_ids = [aws_security_group.splunk.id, aws_security_group.public.id]
+  vpc_security_group_ids = [aws_security_group.splunk.id]
   root_block_device {
     volume_size = var.EC2["splunk_volume_size"]
   }
