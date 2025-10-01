@@ -53,7 +53,7 @@ resource "aws_lb_target_group_attachment" "guacamole" {
 resource "aws_lb_target_group" "splunk" {
   health_check {
     interval            = 10
-    path                = "/"
+    path                = "/en-US/account/login"
     protocol            = "HTTP"
     port                = 80
     timeout             = 5
@@ -61,7 +61,7 @@ resource "aws_lb_target_group" "splunk" {
     unhealthy_threshold = 2
   }
   name        = "splunk"
-  port        = 8000
+  port        = 80
   protocol    = "HTTP"
   target_type = "instance"
   vpc_id      = aws_vpc.devops-infra.id
@@ -70,7 +70,7 @@ resource "aws_lb_target_group" "splunk" {
 resource "aws_lb_target_group_attachment" "splunk" {
   target_group_arn = aws_lb_target_group.splunk.arn
   target_id        = aws_instance.splunk.id
-  port             = 8000
+  port             = 80
 }
 
 resource "aws_lb_target_group" "lab_tg" {
@@ -125,6 +125,25 @@ resource "aws_lb_listener_rule" "guacamole_rule" {
 
   tags = {
     Name = "bastion"
+  }
+}
+
+resource "aws_lb_listener_rule" "splunk_rule" {
+  listener_arn = aws_lb_listener.devops-infra.arn
+
+  condition {
+    host_header {
+      values = [var.NW["splunk_dns_fqdn"]]
+    }
+  }
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.splunk.arn
+  }
+
+  tags = {
+    Name = "splunk"
   }
 }
 
