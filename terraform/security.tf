@@ -81,8 +81,8 @@ resource "aws_vpc_security_group_egress_rule" "splunk-http-out" {
   description                  = "Splunk HTTP OUT"
   ip_protocol                  = "tcp"
   referenced_security_group_id = aws_security_group.splunk.id
-  to_port                      = 8000
-  from_port                    = 8000
+  to_port                      = 80
+  from_port                    = 80
   tags = {
     Name = "Splunk HTTP OUT"
   }
@@ -156,8 +156,8 @@ resource "aws_vpc_security_group_ingress_rule" "alb-splunk-http-in" {
 
   description                  = "ALB HTTP IN"
   ip_protocol                  = "tcp"
-  to_port                      = 8000
-  from_port                    = 8000
+  to_port                      = 80
+  from_port                    = 80
   referenced_security_group_id = aws_security_group.alb.id
   tags = {
     Name = "ALB HTTP IN"
@@ -175,6 +175,20 @@ resource "aws_vpc_security_group_ingress_rule" "bastion-splunk-ssh-in" {
   from_port                    = 22
   tags = {
     Name = "Bastion SSH IN"
+  }
+}
+
+# Private to Splunk HEC IN
+resource "aws_vpc_security_group_ingress_rule" "private-splunk-http-in" {
+  security_group_id = aws_security_group.splunk.id
+
+  description                  = "Private HEC IN"
+  ip_protocol                  = "tcp"
+  to_port                      = 8088
+  from_port                    = 8088
+  referenced_security_group_id = aws_security_group.alb.id
+  tags = {
+    Name = "Private HEC IN"
   }
 }
 
