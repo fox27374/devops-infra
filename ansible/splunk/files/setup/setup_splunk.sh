@@ -26,6 +26,9 @@ kubectl apply -f .
 cd $YAMLDIR/pvc
 kubectl apply -f .
 
+cd $YAMLDIR/configmap
+kubectl apply -f .
+
 cd $YAMLDIR/service
 kubectl apply -f .
 
