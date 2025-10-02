@@ -41,3 +41,8 @@
   when:
     - install_otel_collector
 
+- name: Setup OTEL collector
+  ansible.builtin.include_tasks: setup_otel_collector.yml
+  when:
+    - setup_otel_collector
+

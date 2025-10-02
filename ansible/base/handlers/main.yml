@@ -1,4 +1,7 @@
 ---
 - name: Restart SSH Service
   import_tasks: restart_ssh.yml
+
+- name: Restart OTEL Collector
+  import_tasks: restart_otel_collector.yml
 ...
