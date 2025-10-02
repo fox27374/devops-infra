@@ -20,5 +20,13 @@ spec:
         envFrom:
         - secretRef:
             name: splunk
+        volumeMounts:
+        - name: splunk-cm
+          mountPath: "/tmp/defaults"
+          readOnly: true
+      volumes:
+      - name: splunk-cm
+        configMap:
+          name: splunk
 
 
