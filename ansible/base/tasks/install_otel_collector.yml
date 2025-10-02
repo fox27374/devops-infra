@@ -1,11 +1,14 @@
 ---
-- name: Install Splunk OpenTelemetry Collector
-  ansible.builtin.include_role:
-    name: "signalfx.splunk_otel_collector.collector"
-  vars:
-    splunk_access_token: G5qTGVdMMr5gVIiRm-Tjpg
-    splunk_realm: eu0
-    splunk_otel_collector_config: /etc/otel/collector/agent_config.yaml
-    install_fluentd: no
+- name: Download Splunk OTEL collector
+  ansible.builtin.get_url:
+    url: https://dl.signalfx.com/splunk-otel-collector.sh
+    dest: /opt/setup/splunk-otel-collector.sh
+    mode: '0755'
+  become: true
 
-
+- name: Install Oh My Zsh into the global directory
+  environment:
+    ZSH: /opt/ohmyzsh
+  ansible.builtin.command:
+    cmd: sh /opt/setup/splunk-otel-collector.sh --realm eu0 --memory $SPLUNK_MEMORY_TOTAL_MIB -- $SPLUNK_ACCESS_TOKEN
+  become: true
