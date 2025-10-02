@@ -8,8 +8,20 @@ spec:
     - web
   routes:
     - kind: Rule
-      match: PathPrefix(`/`)
+      match: PathPrefix(`/en-US/account/login`)
       services:
         - kind: Service
           name: splunk
           port: 8000
+    - kind: Rule
+      match: Host(`splunk.aws.ntslab.eu`)
+      services:
+        - kind: Service
+          name: splunk
+          port: 8000
+    - kind: Rule
+      match: Host(`hec.lab.local`)
+      services:
+        - kind: Service
+          name: splunk-hec
+          port: 8088
