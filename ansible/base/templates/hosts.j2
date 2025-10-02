@@ -1,5 +1,7 @@
 127.0.0.1 localhost
-
+# Splunk host and HEC endpoint
+{{ groups['splunk'][0] }} {{ hostvars[groups['splunk'][0]].instance_name }}.lab.local
+{{ groups['splunk'][0] }} hec.lab.local
 # Local lab DNS resolution
 {% for host in groups['lab'] %}
 {{ host }} {{ hostvars[host]['instance_name'] }}
