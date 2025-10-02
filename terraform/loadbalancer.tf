@@ -6,6 +6,7 @@ resource "aws_lb" "devops-infra" {
   subnets            = [aws_subnet.public.id, aws_subnet.private.id]
 
   enable_deletion_protection = false
+  preserve_host_header = true
 
   tags = {
     Environment = "devops"
