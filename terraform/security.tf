@@ -94,7 +94,7 @@ resource "aws_vpc_security_group_egress_rule" "private-http-out" {
 
   description = "Private HTTP OUT"
   ip_protocol = "tcp"
-  cidr_ipv4   = var.NW["sn_private_cidr"]
+  referenced_security_group_id = aws_security_group.private.id
   to_port     = 8080
   from_port   = 8080
   tags = {
@@ -184,9 +184,9 @@ resource "aws_vpc_security_group_ingress_rule" "private-splunk-http-in" {
 
   description                  = "Private HEC IN"
   ip_protocol                  = "tcp"
-  to_port                      = 8088
-  from_port                    = 8088
-  referenced_security_group_id = aws_security_group.alb.id
+  to_port                      = 80
+  from_port                    = 80
+  referenced_security_group_id = aws_security_group.private.id
   tags = {
     Name = "Private HEC IN"
   }
@@ -258,7 +258,7 @@ resource "aws_vpc_security_group_ingress_rule" "private-ssh-in" {
   ip_protocol = "tcp"
   to_port     = 22
   from_port   = 22
-  cidr_ipv4   = var.NW["sn_private_cidr"]
+  referenced_security_group_id = aws_security_group.private.id
   tags = {
     Name = "Private SSH IN"
   }
@@ -272,7 +272,7 @@ resource "aws_vpc_security_group_ingress_rule" "public-icmp-in" {
   ip_protocol = "icmp"
   from_port   = 8
   to_port     = 0
-  cidr_ipv4   = var.NW["sn_public_cidr"]
+  referenced_security_group_id = aws_security_group.public.id
   tags = {
     Name = "Public ICMP IN"
   }
