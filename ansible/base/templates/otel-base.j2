@@ -1,0 +1,59 @@
+extensions:
+  health_check:
+
+receivers:
+  hostmetrics:
+    collection_interval: 5s
+    scrapers:
+      cpu:
+      disk:
+      filesystem:
+      load:
+      memory:
+      network:
+      paging:
+  journald:
+
+processors:
+  batch:
+  resourcedetection:
+    detectors:
+    - system
+    system:
+      resource_attributes:
+        host.name:
+          enabled: true
+        host.id:
+          enabled: false
+        os.type:
+          enabled: false
+
+exporters:
+  splunk_hec:
+    token: "abcd1234"
+    endpoint: "http://hec.lab.local/services/collector"
+    source: "otel"
+    sourcetype: "otel"
+    disable_compression: false
+    timeout: 10s
+    tls:
+      insecure_skip_verify: true
+
+service:
+  pipelines:
+    metrics:
+      receivers:
+      - hostmetrics
+      processors:
+      - batch
+      - resourcedetection
+      exporters:
+      - splunk_hec
+    logs:
+      receivers:
+      - journald
+      exporters:
+      - splunk_hec
+
+  extensions:
+  - health_check

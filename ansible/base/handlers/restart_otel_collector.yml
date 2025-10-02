@@ -1,0 +1,7 @@
+---
+- name: Restart OTEL Collector
+  become: true
+  ansible.builtin.service:
+    name: otelcol-contrib
+    state: restarted
+...

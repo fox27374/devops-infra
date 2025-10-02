@@ -1,14 +1,16 @@
 ---
-- name: Download Splunk OTEL collector
-  ansible.builtin.get_url:
-    url: https://dl.signalfx.com/splunk-otel-collector.sh
-    dest: /opt/setup/splunk-otel-collector.sh
-    mode: '0755'
-  become: true
+- name: Print all available facts
+  ansible.builtin.debug:
+    var: ansible_facts['architecture']
 
-- name: Install Oh My Zsh into the global directory
-  environment:
-    ZSH: /opt/ohmyzsh
-  ansible.builtin.command:
-    cmd: sh /opt/setup/splunk-otel-collector.sh --realm eu0 --memory $SPLUNK_MEMORY_TOTAL_MIB -- $SPLUNK_ACCESS_TOKEN
+- name: Download OTEL collector
+  ansible.builtin.get_url:
+    url: https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v{{ otel_version }}/otelcol-contrib_{{ otel_version }}_linux_amd64.deb
+    dest: /tmp/otelcol.deb
+    mode: '0640'
+
+- name: Install OTEL collector
   become: true
+  ansible.builtin.apt:
+    deb: /tmp/otelcol.deb
+...
