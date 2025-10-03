@@ -13,6 +13,10 @@ receivers:
       network:
       paging:
   journald:
+  filelog:
+    include:
+    - /var/log/auth.log
+    - /var/log/syslog
 
 processors:
   batch:
@@ -23,10 +27,6 @@ processors:
       resource_attributes:
         host.name:
           enabled: true
-        host.id:
-          enabled: false
-        os.type:
-          enabled: false
 
 exporters:
   splunk_hec:
@@ -41,17 +41,18 @@ exporters:
 
 service:
   pipelines:
-    metrics:
-      receivers:
-      - hostmetrics
-      processors:
-      - batch
-      - resourcedetection
-      exporters:
-      - splunk_hec
+    #metrics:
+    #  receivers:
+    #  - hostmetrics
+    #  processors:
+    #  - batch
+    #  - resourcedetection
+    #  exporters:
+    #  - splunk_hec
     logs:
       receivers:
       - journald
+      - filelog
       exporters:
       - splunk_hec
 

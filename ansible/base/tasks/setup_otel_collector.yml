@@ -9,4 +9,9 @@
     mode: '0644'
   notify:
     - Restart OTEL Collector
+
+ # sudo apt install acl
+ # sudo usermod -a -G systemd-journal otelcol-contrib
+ # sudo setfacl -m otelcol-contrib:r-- /var/log/auth.log
+ # sudo setfacl -m otelcol-contrib:r-- /var/log/syslog
 ...
