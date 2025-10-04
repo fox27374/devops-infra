@@ -1,17 +1,37 @@
 ---
 - name: Generate OTEL basic config
-  become: true
   ansible.builtin.template:
     src: otel-base.j2
     dest: /etc/otelcol-contrib/config.yaml
     owner: root
     group: root
     mode: '0644'
+  become: true
+
+- name: Grant user otelcol-contrib read access to auth.log
+  ansible.posix.acl:
+    path: /var/log/auth.log
+    entity: otelcol-contrib
+    etype: user
+    permissions: r
+    state: present
+  become: true
+
+- name: Grant user otelcol-contrib read access to syslog
+  ansible.posix.acl:
+    path: /var/log/syslog
+    entity: otelcol-contrib
+    etype: user
+    permissions: r
+    state: present
+  become: true
+
+- name: Add otelcol-contrib user to systemd-journal group
+  ansible.builtin.user:
+    name: otelcol-contrib
+    groups: systemd-journal
+    append: yes
+  become: true
   notify:
     - Restart OTEL Collector
-
- # sudo apt install acl
- # sudo usermod -a -G systemd-journal otelcol-contrib
- # sudo setfacl -m otelcol-contrib:r-- /var/log/auth.log
- # sudo setfacl -m otelcol-contrib:r-- /var/log/syslog
 ...
