@@ -13,6 +13,8 @@ receivers:
       network:
       paging:
   journald:
+    units:
+    - ssh
   filelog:
     include:
     - /var/log/auth.log
@@ -29,11 +31,22 @@ processors:
           enabled: true
 
 exporters:
-  splunk_hec:
+  splunk_hec/logs:
     token: "abcd1234"
     endpoint: "http://hec.lab.local/services/collector"
     source: "otel"
-    sourcetype: "otel"
+    sourcetype: "lab_logs"
+    index: "lab_logs"
+    disable_compression: false
+    timeout: 10s
+    tls:
+      insecure_skip_verify: true
+  splunk_hec/metrics:
+    token: "abcd1234"
+    endpoint: "http://hec.lab.local/services/collector"
+    source: "otel"
+    sourcetype: "lab_metrics"
+    index: "lab_metrics"
     disable_compression: false
     timeout: 10s
     tls:
@@ -41,20 +54,20 @@ exporters:
 
 service:
   pipelines:
-    #metrics:
-    #  receivers:
-    #  - hostmetrics
-    #  processors:
-    #  - batch
-    #  - resourcedetection
-    #  exporters:
-    #  - splunk_hec
+    metrics:
+      receivers:
+      - hostmetrics
+      processors:
+      - batch
+      - resourcedetection
+      exporters:
+      - splunk_hec/metrics
     logs:
       receivers:
       - journald
       - filelog
       exporters:
-      - splunk_hec
+      - splunk_hec/logs
 
   extensions:
   - health_check
