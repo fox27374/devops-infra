@@ -8,6 +8,23 @@ data:
   default.yml: |
     ---
     splunk:
+      conf:
+      - key: indexes
+        value:
+          directory: /opt/splunk/etc/system/local
+          content:
+            lab_logs:
+              homePath: $SPLUNK_DB/lab_logs/db
+              coldPath: $SPLUNK_DB/lab_logs/colddb
+              thawedPath: $SPLUNK_DB/lab_logs/thaweddb
+      - key: indexes
+        value:
+          directory: /opt/splunk/etc/system/local
+          content:
+            lab_metrics:
+              homePath: $SPLUNK_DB/lab_metrics/db
+              coldPath: $SPLUNK_DB/lab_metrics/colddb
+              thawedPath: $SPLUNK_DB/lab_metrics/thaweddb
       hec:
         enable: True
         ssl: False
