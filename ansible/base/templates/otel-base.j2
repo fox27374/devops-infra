@@ -66,6 +66,9 @@ service:
       receivers:
       - journald
       - filelog
+      processors:
+      - batch
+      - resourcedetection
       exporters:
       - splunk_hec/logs
 
