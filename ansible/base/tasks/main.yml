@@ -4,6 +4,11 @@
   when:
     - set_hostname
 
+- name: Set timezone
+  ansible.builtin.include_tasks: set_timezone.yml
+  when:
+    - set_timezone
+
 - name: Add linux user
   ansible.builtin.include_tasks: add_linux_user.yml
   when:

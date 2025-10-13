@@ -1,0 +1,4 @@
+---
+- name: Set timezone
+  ansible.builtin.command: "/usr/bin/timedatectl set-timezone {{ timezone }}"
+  become: true
