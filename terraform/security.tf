@@ -178,6 +178,20 @@ resource "aws_vpc_security_group_ingress_rule" "bastion-splunk-ssh-in" {
   }
 }
 
+# Bastion to Splunk HEC IN
+resource "aws_vpc_security_group_ingress_rule" "bastion-splunk-http-in" {
+  security_group_id = aws_security_group.splunk.id
+
+  description                  = "Bastion HEC IN"
+  ip_protocol                  = "tcp"
+  to_port                      = 80
+  from_port                    = 80
+  referenced_security_group_id = aws_security_group.bastion.id
+  tags = {
+    Name = "Private HEC IN"
+  }
+}
+
 # Private to Splunk HEC IN
 resource "aws_vpc_security_group_ingress_rule" "private-splunk-http-in" {
   security_group_id = aws_security_group.splunk.id
