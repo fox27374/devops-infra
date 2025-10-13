@@ -250,20 +250,6 @@ resource "aws_vpc_security_group_ingress_rule" "bastion-ssh-in" {
   }
 }
 
-# Bastion to private subnet HTTP IN
-resource "aws_vpc_security_group_ingress_rule" "bastion-http-in" {
-  security_group_id = aws_security_group.private.id
-
-  description                  = "Bastion HTTP IN"
-  ip_protocol                  = "tcp"
-  to_port                      = 80
-  from_port                    = 80
-  referenced_security_group_id = aws_security_group.bastion.id
-  tags = {
-    Name = "Bastion HTTP IN"
-  }
-}
-
 # Private to private subnet SSH IN
 resource "aws_vpc_security_group_ingress_rule" "private-ssh-in" {
   security_group_id = aws_security_group.private.id
