@@ -14,3 +14,4 @@ ssh_users:
   - student
 password_auth: True
 otel_version: 0.136.0
+timezone: Europe/Vienna
