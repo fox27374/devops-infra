@@ -1,11 +1,12 @@
 ---
 # defaults file for linux-training
-set_hostname: True
-add_linux_user: True
-add_user_sudo: True
-setup_ssh: True
-setup_hosts_file: True
-install_packages: True
-install_oh_my_zsh: True
-install_otel_collector: True
+set_hostname: False
+set_timezone: False
+add_linux_user: False
+add_user_sudo: False
+setup_ssh: False
+setup_hosts_file: False
+install_packages: False
+install_oh_my_zsh: False
+install_otel_collector: False
 setup_otel_collector: True
