@@ -5,3 +5,4 @@
     groups: sudo
     append: yes
   become: true
+  when: enable_sudo_user | default(false)

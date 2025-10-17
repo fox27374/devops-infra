@@ -1,3 +1,4 @@
 ---
 lab_type: container
+enable_sudo_user: True
 ...
