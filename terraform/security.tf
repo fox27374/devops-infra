@@ -264,6 +264,34 @@ resource "aws_vpc_security_group_ingress_rule" "private-ssh-in" {
   }
 }
 
+# Private to private subnet MySQL IN
+resource "aws_vpc_security_group_ingress_rule" "private-mysql-in" {
+  security_group_id = aws_security_group.private.id
+
+  description = "Private SSH IN"
+  ip_protocol = "tcp"
+  to_port     = 3306
+  from_port   = 3306
+  referenced_security_group_id = aws_security_group.private.id
+  tags = {
+    Name = "Private MySQL IN"
+  }
+}
+
+# Private to private subnet PGSQL IN
+resource "aws_vpc_security_group_ingress_rule" "private-pgsql-in" {
+  security_group_id = aws_security_group.private.id
+
+  description = "Private PGSQL IN"
+  ip_protocol = "tcp"
+  to_port     = 5432
+  from_port   = 5432
+  referenced_security_group_id = aws_security_group.private.id
+  tags = {
+    Name = "Private PGSQL IN"
+  }
+}
+
 # Public to private subnet ICMP IN
 resource "aws_vpc_security_group_ingress_rule" "public-icmp-in" {
   security_group_id = aws_security_group.private.id
