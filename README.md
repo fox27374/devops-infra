@@ -6,10 +6,11 @@ A fully automated lab environment designed to support Linux, container, Kubernet
 * Bastion host serving as a secure SSH entry point to the lab environment
 * Apache Guacamole server (running on k3s) providing web-based access to lab resources
 * AWS Load Balancer enabling external access to hosted web applications
-* Fine grained network 
+* Fine grained network ACLs leveraging security groups
 * Infrastructure provisioned using Terraform
 * Application deployment automated with Ansible
 * Splunk monitoring server (running on k3s) for in depth monitoring of the labs
+* Opentelemetry collector used for metrics and logs
 
 ## Prerequisites
 1) Configure your local **~/.aws/config** and **~/.aws/credentials** files to ensure the Terraform AWS provider can authenticate with your AWS account.
