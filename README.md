@@ -23,8 +23,8 @@ Currently there are two labs that can be deployed and used for trainings. A cont
 The files that are copied by Ansible can be found in the lab role in the **files** directory. This can be switched off by setting the **copy_lab_files** to **false** in the **main.yml**.
 
 Trainings based on this lab infrastructure:
-[Linux Basics](https://github.com/fox27374/linux-basics)
-[Container Basics](https://github.com/fox27374/container-basics)
-[DevOps Workshop](https://github.com/fox27374/devops-workshop)
+* [Linux Basics](https://github.com/fox27374/linux-basics)
+* [Container Basics](https://github.com/fox27374/container-basics)
+* [DevOps Workshop](https://github.com/fox27374/devops-workshop)  
 
 ![Overview](https://github.com/fox27374/devops-infra/blob/main/aws_lab.png)
