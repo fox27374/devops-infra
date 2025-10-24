@@ -1,4 +1,5 @@
 # DevOps Infrastructure 
+![Overview](https://github.com/fox27374/devops-infra/blob/main/aws_lab.png)
 ## AWS lab environment
 A fully automated lab environment designed to support Linux, container, Kubernetes, and other Linux-based application training scenarios. The entire environment can be deployed and configured through automation, with infrastructure settings defined in **tfvars** files and configuration management handled via **main.yml** files within Ansible playbooks or role directories.
 
@@ -26,5 +27,3 @@ Trainings based on this lab infrastructure:
 * [Linux Basics](https://github.com/fox27374/linux-basics)
 * [Container Basics](https://github.com/fox27374/container-basics)
 * [DevOps Workshop](https://github.com/fox27374/devops-workshop)  
-
-![Overview](https://github.com/fox27374/devops-infra/blob/main/aws_lab.png)
