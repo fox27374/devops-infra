@@ -33,8 +33,8 @@ NW = {
   external_v6_cidr   = "::/0"
   az1                = "eu-west-1a"
   az2                = "eu-west-1b"
-  dns_zone_id        = "Z04324152F8LEAJFJOZTE"
-  domain_name        = "aws.ntslab.eu"
+  dns_zone_id        = "Z04324152F8LEAJFJOZTF"
+  domain_name        = "kofler.sh"
 }
 
 # Security variables
