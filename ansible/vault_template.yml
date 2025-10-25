@@ -1,6 +1,3 @@
 linux_pw: "changeme"
 guacamole_pw: "changeme"
-splunk_access_token: "changeme"
-mysql_root_poassword: "changeme"
-mysql_user_password: "changeme"
 id_rsa: "changeme"
