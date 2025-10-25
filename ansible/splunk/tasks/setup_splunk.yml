@@ -1,4 +1,19 @@
 ---
+- name: Copy splunk yaml files
+  ansible.posix.synchronize:
+    src: ../files/k3s
+    dest: /opt/setup
+  become: true
+
+- name: Render ingress yaml
+  ansible.builtin.template:
+    src: ingress.j2
+    dest: /opt/setup/k3s/ingress/ingress.yaml
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+
 - name: Setup Splunk
   ansible.builtin.command:
     cmd: bash /opt/setup/setup_splunk.sh

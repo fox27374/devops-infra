@@ -14,7 +14,7 @@ spec:
           name: splunk
           port: 8000
     - kind: Rule
-      match: Host(`{{ splunk_fqdn }}`)
+      match: Host(`splunk.{{ domain_name }}`)
       services:
         - kind: Service
           name: splunk
