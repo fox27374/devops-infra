@@ -69,8 +69,8 @@ locals {
 
   # Additional static or custom DNS names
   additional_dns_names = [
-    var.NW["guacamole_dns_fqdn"],
-    var.NW["bastion_dns_fqdn"]
+    "guacamole.${var.NW.domain_name}",
+    "bastion.${var.NW.domain_name}"
   ]
 
   cert_dns_names = concat(local.lab_dns_names, local.additional_dns_names)

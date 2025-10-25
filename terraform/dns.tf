@@ -1,12 +1,14 @@
-# # Create DNS zone
-# resource "aws_route53_zone" "devops" {
-#   name = "devops.ntslab.eu"
-# }
+locals {
+  cert_sans = [
+    "guacamole.${var.NW.domain_name}",
+    "splunk.${var.NW.domain_name}",
+    "*.${var.NW.domain_name}" ]
+  }
 
 # Create bastion DNS record
 resource "aws_route53_record" "bastion" {
   zone_id = var.NW["dns_zone_id"]
-  name    = var.NW["bastion_dns_fqdn"]
+  name    = "bastion.${var.NW.domain_name}"
   type    = "A"
   ttl     = 28800
   records = [aws_eip.bastion.public_ip]
@@ -17,7 +19,7 @@ resource "aws_route53_record" "bastion" {
 # Create guacamole DNS records (CNAME) pointing to the ALB
 resource "aws_route53_record" "guacamole" {
   zone_id = var.NW["dns_zone_id"]
-  name    = var.NW["guacamole_dns_fqdn"]
+  name    = "guacamole.${var.NW.domain_name}"
   type    = "CNAME"
   ttl     = 28800
   records = [aws_lb.devops-infra.dns_name]
@@ -26,7 +28,7 @@ resource "aws_route53_record" "guacamole" {
 # Create splunk DNS record
 resource "aws_route53_record" "splunk" {
   zone_id = var.NW["dns_zone_id"]
-  name    = var.NW["splunk_dns_fqdn"]
+  name    = "splunk.${var.NW.domain_name}"
   type    = "CNAME"
   ttl     = 28800
   records = [aws_lb.devops-infra.dns_name]
@@ -65,8 +67,8 @@ resource "aws_route53_record" "lab_validation_record" {
 
 # Create a certificate with SAN entries for the DNS names
 resource "aws_acm_certificate" "lab" {
-  domain_name = var.cert_sans[0]
-  subject_alternative_names = slice(var.cert_sans, 1, length(var.cert_sans))
+  domain_name = local.cert_sans[0]
+  subject_alternative_names = slice(local.cert_sans, 1, length(local.cert_sans))
   validation_method         = "DNS"
 
   #depends_on = [aws_route53_record.lab_validation_record]

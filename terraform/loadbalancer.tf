@@ -115,7 +115,7 @@ resource "aws_lb_listener_rule" "guacamole_rule" {
 
   condition {
     host_header {
-      values = [var.NW["guacamole_dns_fqdn"]]
+      values = ["guacamole.${var.NW.domain_name}"]
     }
   }
 
@@ -134,7 +134,7 @@ resource "aws_lb_listener_rule" "splunk_rule" {
 
   condition {
     host_header {
-      values = [var.NW["splunk_dns_fqdn"]]
+      values = ["splunk.${var.NW.domain_name}"]
     }
   }
 
