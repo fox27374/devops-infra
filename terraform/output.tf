@@ -10,6 +10,7 @@ resource "local_file" "ansible_inventory" {
   ]
   content = templatefile("${path.module}/templates/inventory.tftpl",
     {
+      domain_name           = var.NW["domain_name"]
       bastion_dns           = aws_route53_record.bastion
       bastion_instance_name = aws_instance.bastion.tags["Name"]
       splunk_instance = aws_instance.splunk
