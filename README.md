@@ -18,6 +18,7 @@ A fully automated lab environment designed to support Linux, container, Kubernet
 2) Update the **terraform.tfvars** file according to your requirements, especially the number of private instances to be deployed.
 3) Replace the public key in **terraform/cloud-config/user_data.cloud** with your own.
 4) Rename **ansible/vault_template.yml** to **vault.yml** and encrypt it using ansible-vault.
+5) Create a DNS zone in AWS and adapt the **dns_zone_id** and **domain_name** in the **terraform.tfvars** file accordingly
 
 ## Lab usage
 Currently there are two labs that can be deployed and used for trainings. A container lab and a kubernetes lab.
