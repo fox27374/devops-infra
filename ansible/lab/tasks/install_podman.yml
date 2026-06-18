@@ -6,8 +6,14 @@
     cache_valid_time: 86400
   become: true
 
-- name: Install software packages
+- name: Install podman
   ansible.builtin.apt:
     name: "podman"
+    state: present
+  become: true
+
+- name: Install podman-compose
+  ansible.builtin.apt:
+    name: "podman-compose"
     state: present
   become: true

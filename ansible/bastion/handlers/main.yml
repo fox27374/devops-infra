@@ -1,4 +1,4 @@
 ---
-- name: Restart Nginx Service
-  import_tasks: restart_nginx.yml
+- name: Restart HAProxy Service
+  import_tasks: restart_haproxy.yml
 ...

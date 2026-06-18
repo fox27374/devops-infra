@@ -1,0 +1,5 @@
+Host 10.42.22.*
+  User ansible
+  IdentityFile ~/.ssh/id_aws_ansible
+  StrictHostKeyChecking no
+  ProxyJump ${bastion_instance.public_dns}

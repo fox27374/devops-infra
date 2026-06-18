@@ -22,6 +22,7 @@ data:
           directory: /opt/splunk/etc/system/local
           content:
             lab_metrics:
+              datatype: metric
               homePath: $SPLUNK_DB/lab_metrics/db
               coldPath: $SPLUNK_DB/lab_metrics/colddb
               thawedPath: $SPLUNK_DB/lab_metrics/thaweddb
@@ -29,5 +30,5 @@ data:
         enable: True
         ssl: False
         port: 8088
-        token: abcd1234
+        token: fb173829-c4ef-43d9-b876-cdce452efdcd
 

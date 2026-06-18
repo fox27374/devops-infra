@@ -5,10 +5,10 @@
   when:
     - install_additional_packages
 
-- name: Setup nginx
-  ansible.builtin.include_tasks: setup_nginx.yml
+- name: Setup HAProxy
+  ansible.builtin.include_tasks: setup_haproxy.yml
   when:
-    - setup_nginx
+    - setup_haproxy
 
 - name: Rsync setup files
   ansible.builtin.include_tasks: rsync_setup_files.yml

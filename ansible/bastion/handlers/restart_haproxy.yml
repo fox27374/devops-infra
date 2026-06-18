@@ -1,7 +1,7 @@
 ---
-- name: Restart nginx Service
+- name: Restart haproxy Service
   become: true
   ansible.builtin.service:
-    name: nginx.service
+    name: haproxy.service
     state: restarted
 ...

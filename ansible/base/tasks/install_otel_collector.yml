@@ -1,7 +1,7 @@
 ---
-- name: Print all available facts
-  ansible.builtin.debug:
-    var: ansible_facts['architecture']
+# - name: Print all available facts
+#   ansible.builtin.debug:
+#     var: ansible_facts['architecture']
 
 - name: Download OTEL collector
   ansible.builtin.get_url:

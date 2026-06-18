@@ -7,13 +7,13 @@
 
 - name: Sync lab files
   ansible.posix.synchronize:
-    src: ../files/docker_lab
+    src: ../files/container_lab
     dest: "/home/{{ linux_user }}"
   become: true
 
 - name: Change folder permissions
   ansible.builtin.file:
-    path: "/home/{{ linux_user }}/docker_lab"
+    path: "/home/{{ linux_user }}/container_lab"
     state: directory
     recurse: yes
     owner: "{{ linux_user }}"

@@ -1,0 +1,68 @@
+global
+    log /dev/log local0
+    log /dev/log local1 notice
+    maxconn 50000
+    user haproxy
+    group haproxy
+    daemon
+
+    ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384
+    ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
+    ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
+
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    option  forwardfor
+    option  http-server-close
+    timeout connect 5s
+    timeout client  30s
+    timeout server  30s
+
+#-------------------------------------------------------------------------------
+# Frontend — accepts HTTPS on port 443
+#-------------------------------------------------------------------------------
+
+frontend https_frontend
+    #bind *:443 ssl crt {{ ssl_cert_path | default('/etc/haproxy/certs/lab.pem') }}
+    bind *:80
+    mode http
+
+    # Route based on hostname
+{% for host in groups['lab'] | sort %}
+{% set name = hostvars[host]['instance_name'] %}
+    use_backend backend_{{ name }} if { hdr(host) -i {{ name }}.{{ domain_name }} }
+{% endfor %}
+    use_backend backend_splunk if { hdr(host) -i splunk.azure.ntslab.eu }
+
+    default_backend backend_default
+
+#-------------------------------------------------------------------------------
+# Backends — one per VM, forwards to port 8080
+#-------------------------------------------------------------------------------
+
+{% for host in groups['lab'] | sort %}
+{% set name = hostvars[host]['instance_name'] %}
+backend backend_{{ name }}
+    mode http
+    balance roundrobin
+    server {{ name }} {{ name }}.lab.local:8080 check
+
+{% endfor %}
+backend backend_splunk
+    mode http
+    balance roundrobin
+    option httpchk GET /en-US/account/login
+    http-check expect status 200
+    server splunk splunk.lab.local:80 check
+
+#-------------------------------------------------------------------------------
+# Default backend — 503 if no hostname matched
+#-------------------------------------------------------------------------------
+
+backend backend_default
+    mode http
+    errorfile 503 /etc/haproxy/errors/503.http
+

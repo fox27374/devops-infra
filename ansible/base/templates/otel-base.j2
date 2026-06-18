@@ -32,7 +32,7 @@ processors:
 
 exporters:
   splunk_hec/logs:
-    token: "abcd1234"
+    token: "fb173829-c4ef-43d9-b876-cdce452efdcd"
     endpoint: "http://hec.lab.local/services/collector"
     source: "otel"
     sourcetype: "lab_logs"
@@ -42,7 +42,7 @@ exporters:
     tls:
       insecure_skip_verify: true
   splunk_hec/metrics:
-    token: "abcd1234"
+    token: "fb173829-c4ef-43d9-b876-cdce452efdcd"
     endpoint: "http://hec.lab.local/services/collector"
     source: "otel"
     sourcetype: "lab_metrics"

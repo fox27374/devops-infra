@@ -3,7 +3,7 @@
 set_hostname: True
 set_timezone: True
 add_linux_user: True
-add_user_sudo: False
+add_user_sudo: True
 setup_ssh: True
 setup_hosts_file: True
 install_packages: True
