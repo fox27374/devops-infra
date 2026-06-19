@@ -1,0 +1,27 @@
+---
+- name: Remove container-basics folder
+  ansible.builtin.file:
+    path: "/home/{{ linux_user }}/container-basics"
+    state: absent
+  become: true
+
+- name: Remove k8s-basics folder
+  ansible.builtin.file:
+    path: "/home/{{ linux_user }}/k8s-basics"
+    state: absent
+  become: true
+
+- name: Clone container-basics git repo
+  ansible.builtin.git:
+    repo: 'https://github.com/fox27374/container-basics.git'
+    dest: "/home/{{ linux_user }}/container-basics"
+  become: true
+
+- name: Change folder permissions
+  ansible.builtin.file:
+    path: "/home/{{ linux_user }}/container-basics"
+    state: directory
+    recurse: yes
+    owner: "{{ linux_user }}"
+    group: "{{ linux_user }}"
+  become: true

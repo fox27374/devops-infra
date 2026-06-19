@@ -2,8 +2,10 @@
 rsync_setup_files: True
 install_docker: False
 install_podman: True
-rsync_container_lab: True
-install_k3s: False
+rsync_container_lab: False
+clone_container_basics_lab: True
+install_k3s: True
 rsync_k8s_lab: False
+clone_k8s_basics_lab: True
 setup_k8s_lab: False
 ...

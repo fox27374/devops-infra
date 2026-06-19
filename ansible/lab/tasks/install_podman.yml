@@ -1,4 +1,9 @@
 ---
+- name: Remove k3s
+  ansible.builtin.command:
+    cmd: bash /opt/setup/uninstall_k3s.sh
+  become: true
+
 - name: Update/Upgrade apt archives
   ansible.builtin.apt:
     update_cache: yes

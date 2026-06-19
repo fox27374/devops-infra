@@ -1,4 +1,16 @@
 ---
+- name: Remove podman
+  ansible.builtin.apt:
+    name: "podman"
+    state: absent
+  become: true
+
+- name: Remove podman-compose
+  ansible.builtin.apt:
+    name: "podman-compose"
+    state: absent
+  become: true
+
 - name: Install k3s
   ansible.builtin.command:
     cmd: bash /opt/setup/install_k3s.sh

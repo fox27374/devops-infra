@@ -25,6 +25,12 @@
     - lab_type == "container"
     - rsync_container_lab
 
+- name: Clone container-basics git repo
+  ansible.builtin.include_tasks: clone_container_basics_lab.yml
+  when:
+    - lab_type == "container"
+    - clone_container_basics_lab
+
 # k8s
 - name: Install k3s
   ansible.builtin.include_tasks: install_k3s.yml
@@ -37,6 +43,12 @@
   when:
     - lab_type == "k8s"
     - rsync_k8s_lab
+
+- name: Clone k8s-basics git repo
+  ansible.builtin.include_tasks: clone_k8s_basics_lab.yml
+  when:
+    - lab_type == "k8s"
+    - clone_k8s_basics_lab
 
 - name: Setup k8s lab
   ansible.builtin.include_tasks: setup_k8s_lab.yml
