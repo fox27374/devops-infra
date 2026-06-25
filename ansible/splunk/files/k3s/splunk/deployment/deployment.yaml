@@ -16,7 +16,7 @@ spec:
       enableServiceLinks: false
       containers:
       - name: splunk
-        image: splunk/splunk:10.0.1
+        image: docker.io/splunk/splunk:10.2
         envFrom:
         - secretRef:
             name: splunk

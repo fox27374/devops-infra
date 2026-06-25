@@ -3,3 +3,4 @@
 rsync_setup_files: True
 setup_k3s: True
 setup_splunk: True
+setup_registry: True

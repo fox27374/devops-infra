@@ -15,3 +15,8 @@
   when:
     - setup_splunk
 
+- name: Setup Registry
+  ansible.builtin.include_tasks: setup_registry.yml
+  when:
+    - setup_registry
+

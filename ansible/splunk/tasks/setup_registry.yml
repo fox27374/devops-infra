@@ -1,0 +1,5 @@
+---
+- name: Setup Registry
+  ansible.builtin.command:
+    cmd: bash /opt/setup/setup_registry.sh
+  
