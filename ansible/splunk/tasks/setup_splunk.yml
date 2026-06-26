@@ -8,7 +8,7 @@
 - name: Render ingress yaml
   ansible.builtin.template:
     src: ingress.j2
-    dest: /opt/setup/k3s/ingress/ingress.yaml
+    dest: /opt/setup/k3s/splunk/ingress/ingress.yaml
     owner: root
     group: root
     mode: '0644'

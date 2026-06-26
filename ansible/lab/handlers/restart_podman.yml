@@ -1,0 +1,7 @@
+---
+- name: Restart podman Service
+  become: true
+  ansible.builtin.service:
+    name: podman.service
+    state: restarted
+...

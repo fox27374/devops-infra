@@ -16,6 +16,17 @@
     cmd: bash /opt/setup/install_k3s.sh
   become: true
 
+- name: Render k3s registries
+  ansible.builtin.template:
+    src: k3s_registries.j2
+    dest: /etc/rancher/k3s/registries.yaml
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+  notify:
+    - Restart k3s Service
+
 # - name: Install Cilium
 #   ansible.builtin.command:
 #     cmd: /opt/setup/install_cilium.sh

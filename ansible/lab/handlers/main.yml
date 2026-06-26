@@ -1,0 +1,7 @@
+---
+- name: Restart k3s Service
+  import_tasks: restart_k3s.yml
+
+- name: Restart podman Service
+  import_tasks: restart_podman.yml
+...

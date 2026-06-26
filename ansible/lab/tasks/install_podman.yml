@@ -22,3 +22,14 @@
     name: "podman-compose"
     state: present
   become: true
+
+- name: Render podman registries
+  ansible.builtin.template:
+    src: podman_registries.j2
+    dest: /etc/containers/registries.conf.d/cr.lab.local.conf
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+  notify:
+    - Restart podman Service
